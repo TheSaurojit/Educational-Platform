@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+/* Header */
+
+/* Back button */
+.back-btn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.back-btn svg {
+    margin-right: 5px;
+}
+
+/* Main content */
+.page-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #1f1f1f;
+}
+
+.page-description {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Search section */
+.search-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.search-bar {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.filter-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Mathematician card */
+.mathematician-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: row;
+}
+
+.mathematician-photo {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.mathematician-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mathematician-name {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #1f1f1f;
+}
+
+.mathematician-bio {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.interests-label {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.interests-tags {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.interest-tag {
+    background-color: #f0f0f0;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.connect-btn {
+    align-self: flex-end;
+    margin-top: auto;
+    background-color: #1677ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .mathematician-photo {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+   
+    .mathematician-card {
+        flex-direction: column;
+    }
+
+    .mathematician-photo {
+        width: 100%;
+        height: auto;
+        max-height: 350px;
+    }
+
+    .connect-btn {
+        align-self: stretch;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-title {
+        font-size: 24px;
+    }
+
+    .search-section {
+        flex-direction: column;
+    }
+
+    .search-bar {
+        width: 100%;
+    }
+
+    .filter-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .user-nav {
+        gap: 10px;
+    }
+
+    .sign-in {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .notification {
+        margin-right: 5px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+}
+
+/* Add these styles to your existing CSS */
+
+.filter-dropdown {
+display: none;
+position: absolute;
+z-index: 100;
+background-color: white;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+border-radius: 5px;
+padding: 15px;
+margin-top: 5px;
+right: 0;
+top: 50px !important;
+width: 300px;
+max-height: 400px;
+overflow-y: auto;
+}
+
+.filter-btn.active-filter {
+background-color: #1677ff;
+color: white;
+}
+
+@media (max-width: 768px) {
+.filter-dropdown {
+width: 100%;
+right: 0;
+left: 0;
+top: 40px !important;
+}
+}

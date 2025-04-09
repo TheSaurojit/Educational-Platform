@@ -1,0 +1,244 @@
+:root {
+    --blue-primary: #4169e1;
+    --blue-light: #6495ed;
+    --blue-hover: #3457c9;
+    --gray-light: #f5f5f5;
+    --text-dark: #333;
+    --white: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: var(--blue-primary);
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.image-upload img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    background-color: #f0f0f0;
+}
+
+#file-input {
+    display: none;
+}
+
+.upload-btn {
+    background-color: var(--gray-light);
+    color: var(--text-dark);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.interests-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    min-height: 40px;
+}
+
+.interest-tag {
+    background-color: var(--blue-light);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.interest-tag span {
+    cursor: pointer;
+}
+
+.social-media-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-media-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-icon {
+    width: 40px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.submit-btn {
+    background-color: var(--blue-primary);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: var(--blue-hover);
+}
+
+.required::after {
+    content: " *";
+    color: red;
+}
+
+/* New styles for dropdown */
+.custom-select-container {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.custom-select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+}
+
+.custom-select:hover {
+    border-color: var(--blue-light);
+}
+
+.select-arrow {
+    border: solid var(--text-dark);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.3s;
+}
+
+.custom-select.active .select-arrow {
+    transform: rotate(-135deg);
+}
+
+.options-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 10;
+    display: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.option {
+    padding: 12px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: var(--gray-light);
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+/* Animation for dropdown */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.options-container.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.disabled-option {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.interest-count {
+    background-color: var(--blue-primary);
+    color: white;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
