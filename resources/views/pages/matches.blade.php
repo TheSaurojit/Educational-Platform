@@ -263,9 +263,11 @@
             <div class="message-count">
               <span class="message-icon">💬</span> 2 messages
             </div>
+            <a href="/chat">
             <button class="chat-now-btn">
               <span class="chat-icon">💬</span> Chat Now
             </button>
+            </a>
           </div>
         </div>
       </div>
