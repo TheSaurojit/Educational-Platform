@@ -18,15 +18,7 @@
             </div>
         </div>
         
-        <div class="form-group">
-            <label for="name" class="required">Full Name</label>
-            <input type="text" id="name" name="name" required>
-        </div>
         
-        <div class="form-group">
-            <label for="email" class="required">Email Address</label>
-            <input type="email" id="email" name="email" required>
-        </div>
         
         <div class="form-group">
             <label for="address">Address</label>

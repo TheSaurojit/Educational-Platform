@@ -22,12 +22,7 @@
             <div class="profile-header">
                 <div>
                     <h1 class="profile-name">Alex Johnson</h1>
-                    <div class="premium-tag">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        Premium Member
-                    </div>
+                  
                     <div class="location">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -107,21 +102,7 @@
         <!-- Right column with Subscription -->
         <div>
             <!-- Subscription card -->
-            <div class="card">
-                <h2 class="card-title">Subscription</h2>
-                <div class="subscription-card">
-                    <div class="subscription-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                    </div>
-                    <div class="subscription-info">
-                        <h4>Premium Plan</h4>
-                        <p>Enjoy unlimited matches and premium features</p>
-                    </div>
-                </div>
-                <button class="manage-btn">Manage Subscription</button>
-            </div>
+           
 
             <!-- Matches section -->
             <div class="card">
