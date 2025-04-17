@@ -12,7 +12,7 @@ class AuthController extends Controller
     // Show Registration Form
     public function showRegisterForm()
     {
-        return view('pages.sign_in');
+        return view('pages.register');
     }
 
     // Handle Registration

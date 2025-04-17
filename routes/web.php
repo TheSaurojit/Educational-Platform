@@ -42,8 +42,8 @@ Route::get('/chat', function () {
     return view('pages.chat');
 });
 
-Route::get('/signup', function () {
-    return view('pages.sign_up');
+Route::get('/login', function () {
+    return view('pages.login');
 });
 
 
