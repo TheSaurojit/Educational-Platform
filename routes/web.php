@@ -42,6 +42,11 @@ Route::get('/chat', function () {
     return view('pages.chat');
 });
 
+Route::get('/signup', function () {
+    return view('pages.sign_up');
+});
+
+
 // Authentication
 
 Route::controller(AuthController::class)->group(function(){

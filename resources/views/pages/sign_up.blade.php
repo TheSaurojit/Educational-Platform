@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maths-matchmaker | Sign In</title>
+    <title>Maths-matchmaker | Sign Up</title>
     <style>
         * {
             margin: 0;
@@ -105,7 +105,7 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            height: 600px;
+            height: 650px;
         }
 
         .auth-image {
@@ -169,12 +169,10 @@
             padding: 40px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             overflow-y: auto;
         }
 
         .form-title {
-            margin-top: 82px;
             font-size: 1.8rem;
             margin-bottom: 10px;
             color: var(--text-dark);
@@ -210,31 +208,6 @@
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(52, 115, 251, 0.1);
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .remember {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .remember input {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary-color);
-        }
-
-        .forgot-pass {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
         }
 
         .submit-btn {
@@ -305,16 +278,52 @@
             background-color: #e1e4e8;
         }
 
-        .signup-text {
+        .signin-text {
             text-align: center;
             margin-top: 20px;
             color: var(--text-light);
         }
 
-        .signup-link {
+        .signin-link {
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 500;
+        }
+
+        .signup-success {
+            text-align: center;
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #dcf5e8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #30b67b;
+            font-size: 40px;
+        }
+
+        .success-title {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Responsive */
@@ -361,7 +370,7 @@
             </svg>
             Maths-matchmaker
         </a>
- 
+      
     </header>
 
     <div class="container">
@@ -372,62 +381,83 @@
                 <div class="math-symbols symbol-3">∫</div>
                 <div class="math-symbols symbol-4">√</div>
                 <div class="image-content">
-                    <h1>Welcome Back</h1>
-                    <p>Sign in to continue your mathematical journey and reconnect with the community.</p>
+                    <h1>Join Our Community</h1>
+                    <p>Connect with fellow math enthusiasts. Share problems, find collaborators, and expand your mathematical horizons.</p>
                 </div>
             </div>
 
             <div class="auth-form">
-                <h2 class="form-title">Sign In</h2>
-                <p class="form-subtitle">Access your account and continue exploring mathematics</p>
+                <div id="signupForm">
+                    <h2 class="form-title">Create Account</h2>
+                    <p class="form-subtitle">Join our mathematics community today</p>
 
-                <form id="signinForm">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="Enter your email">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Enter your password">
-                    </div>
-
-                    <div class="remember-forgot">
-                        <div class="remember">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">Remember me</label>
+                    <form action="#">
+                        <div class="form-group">
+                            <label for="fullname">Full Name</label>
+                            <input type="text" id="fullname" placeholder="Enter your full name">
                         </div>
-                        <a href="#" class="forgot-pass">Forgot password?</a>
-                    </div>
 
-                    <button type="button" class="submit-btn" id="signinBtn">Sign In</button>
-
-                    {{-- <div class="social-login">
-                        <p>Or continue with</p>
-                        <div class="social-icons">
-                            <div class="social-icon">G</div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" placeholder="Enter your email">
                         </div>
-                    </div> --}}
 
-                    <p class="signup-text">
-                        Don't have an account? <a href="/signup" class="signup-link">Sign Up</a>
-                    </p>
-                </form>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" placeholder="Create a password">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" id="confirm-password" placeholder="Confirm your password">
+                        </div>
+
+                        <button type="button" class="submit-btn" id="signupBtn">Create Account</button>
+{{-- 
+                        <div class="social-login">
+                            <p>Or sign up with</p>
+                            <div class="social-icons">
+                                <div class="social-icon">G</div>
+                            </div>
+                        </div> --}}
+
+                        <p class="signin-text">
+                            Already have an account? <a href="/register" class="signin-link">Sign In</a>
+                        </p>
+                    </form>
+                </div>
+
+                {{-- <div class="signup-success" id="successMessage">
+                    <div class="success-icon">✓</div>
+                    <h2 class="success-title">Account Created!</h2>
+                    <p class="success-message">Your account has been created successfully. You can now sign in with your credentials.</p>
+                    <button class="submit-btn" id="goToSignin">Go to Sign In</button>
+                </div> --}}
             </div>
         </div>
     </div>
 
     <script>
-
-        document.getElementById('signinBtn').addEventListener('click', () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+      
+        document.getElementById('signupBtn').addEventListener('click', () => {
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
             
 
-            console.log('Sign In:', { email, password });
-     
-            alert('Sign in successful!');
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+         
+            console.log('Sign Up:', { fullname, email, password });
+  
+
+            alert('Account Created');
         });
+
+  
     </script>
 </body>
 </html>
