@@ -18,7 +18,22 @@
             </div>
         </div>
         
-        
+        <div class="form-group">
+            <label class="required">Are you a mathematician?</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="mathematician-yes" name="is_mathematician" value="yes">
+                    <span class="radio-custom"></span>
+                    <label for="mathematician-yes">Yes</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="mathematician-no" name="is_mathematician" value="no">
+                    <span class="radio-custom"></span>
+                    <label for="mathematician-no">No</label>
+                </div>
+            </div>
+            <div class="error-message" id="mathematician-error" style="display: none;">Please select an option</div>
+        </div>
         
         <div class="form-group">
             <label for="address">Address</label>
@@ -76,9 +91,10 @@
 
 @section('script-section')
     <script>
-               const imageUploadArea = document.getElementById('image-upload-area');
+        const imageUploadArea = document.getElementById('image-upload-area');
         const fileInput = document.getElementById('file-input');
         const previewImage = document.getElementById('preview-image');
+        const mathematicianError = document.getElementById('mathematician-error');
         
         imageUploadArea.addEventListener('click', () => {
             fileInput.click();
@@ -93,6 +109,16 @@
                 };
                 reader.readAsDataURL(file);
             }
+        });
+        
+        // Handle radio button highlighting
+        const radioOptions = document.querySelectorAll('.radio-option');
+        radioOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                mathematicianError.style.display = 'none';
+            });
         });
         
         // Mathematical interests dropdown
@@ -211,7 +237,7 @@
                 const value = option.dataset.value;
                 
                 if (selectedInterests.includes(value)) {
-                    option.style.backgroundColor = (--gray-light);
+                    option.style.backgroundColor = '#f0f0f0';
                     option.style.fontWeight = 'bold';
                 } else {
                     option.style.backgroundColor = '';
@@ -226,28 +252,41 @@
             });
         }
         
-        // Form submission
+
         const profileForm = document.getElementById('profile-form');
         
         profileForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Validate interests (at least one required)
+
+            const mathematicianOptions = document.querySelectorAll('input[name="is_mathematician"]');
+            let mathematicianSelected = false;
+            mathematicianOptions.forEach(option => {
+                if (option.checked) {
+                    mathematicianSelected = true;
+                }
+            });
+            
+            if (!mathematicianSelected) {
+                mathematicianError.style.display = 'block';
+                return;
+            }
+
             if (selectedInterests.length === 0) {
                 interestsError.style.display = 'block';
                 interestsSelect.style.borderColor = 'red';
                 return;
             }
             
-            // Collect form data
+
             const formData = new FormData(profileForm);
             formData.append('interests', JSON.stringify(selectedInterests));
             
-            // Here you would normally send this data to your server
+
             console.log('Form submitted!');
             console.log('Interests:', selectedInterests);
-            
-            // Show success message
+            console.log('Is mathematician:', formData.get('is_mathematician'));
+       
             alert('Profile created successfully!');
         });
     </script>

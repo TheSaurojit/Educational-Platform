@@ -242,3 +242,76 @@ textarea {
     border-radius: 10px;
     margin-left: 10px;
 }
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 8px;
+  }
+  
+  .radio-option {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    min-width: 120px;
+  }
+  
+  .radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .radio-option .radio-custom {
+    height: 22px;
+    width: 22px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .radio-option input:checked ~ .radio-custom {
+    border-color: #4285f4;
+    background-color: #fff;
+  }
+  
+  .radio-option .radio-custom::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4285f4;
+    display: none;
+    transition: all 0.2s ease;
+  }
+  
+  .radio-option input:checked ~ .radio-custom::after {
+    display: block;
+  }
+  
+  .radio-option label {
+    font-weight: 500;
+    margin-left: 32px;
+    cursor: pointer;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .radio-group {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .radio-option {
+      width: 100%;
+    }
+  }
