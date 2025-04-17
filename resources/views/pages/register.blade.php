@@ -166,7 +166,7 @@
 
         .auth-form {
             flex: 1;
-            padding: 40px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -185,7 +185,7 @@
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
@@ -220,7 +220,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .submit-btn:hover {
@@ -422,7 +422,7 @@
                         </div> --}}
 
                         <p class="signin-text">
-                            Already have an account? <a href="/register" class="signin-link">Sign In</a>
+                            Already have an account? <a href="/login" class="signin-link">Sign In</a>
                         </p>
                     </form>
                 </div>

@@ -166,7 +166,7 @@
 
         .auth-form {
             flex: 1;
-            padding: 40px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -174,7 +174,7 @@
         }
 
         .form-title {
-            margin-top: 82px;
+            margin-top: 19px;
             font-size: 1.8rem;
             margin-bottom: 10px;
             color: var(--text-dark);
@@ -410,7 +410,7 @@
                     </div> --}}
 
                     <p class="signup-text">
-                        Don't have an account? <a href="/signup" class="signup-link">Sign Up</a>
+                        Don't have an account? <a href="/register" class="signup-link">Sign Up</a>
                     </p>
                 </form>
             </div>
