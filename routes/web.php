@@ -37,9 +37,6 @@ Route::get('/profilepublic', function () {
     return view('pages.profile_public');
 });
 
-Route::get('/signin', function () {
-    return view('pages.sign_in');
-});
 
 Route::get('/chat', function () {
     return view('pages.chat');
@@ -47,11 +44,17 @@ Route::get('/chat', function () {
 
 // Authentication
 
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+Route::controller(AuthController::class)->group(function(){
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+    
+    // Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    // Route::post('/login', [AuthController::class, 'login']);
+    
+    // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+
 

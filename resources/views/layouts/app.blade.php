@@ -50,7 +50,7 @@
                 <span class="notification-badge">2</span>
             </div>
         </a>
-            <a href="/signin"><button class="sign-in-btn" href="signin.html">Sign In</button></a>
+            <a href="{{ route('register') }}"><button class="sign-in-btn" href="signin.html">Sign In</button></a>
         </div>
     </nav>
 

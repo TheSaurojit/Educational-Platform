@@ -450,7 +450,7 @@
                     <h2 class="form-title">Create Account</h2>
                     <p class="form-subtitle">Join our mathematics community today</p>
 
-                    <form>
+                    <form action="{{ route('register') }}" method="POST">
                         <div class="form-group">
                             <label for="fullname">Full Name</label>
                             <input type="text" id="fullname" placeholder="Enter your full name">

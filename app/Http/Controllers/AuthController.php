@@ -12,12 +12,13 @@ class AuthController extends Controller
     // Show Registration Form
     public function showRegisterForm()
     {
-        return view('auth.register');
+        return view('pages.sign_in');
     }
 
     // Handle Registration
     public function register(Request $request)
     {
+        dd($request);
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
