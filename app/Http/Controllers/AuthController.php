@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EmailVerificationMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -18,43 +21,69 @@ class AuthController extends Controller
     // Handle Registration
     public function register(Request $request)
     {
-        dd($request);
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
+        $data = $request->validate([
+            "name" => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = User::where('email', $data['email'])->whereNotNull('email_verified_at')->first();
 
-        Auth::login($user);
+        if ($user) {
+            return back()->withErrors(['error'=> 'Email already exists ']);
+        } else {
+            
+            $token = Str::random(50);
 
-        return redirect('/dashboard');
+            $user = User::updateOrCreate(
+                ['email' => $data['email']], // Search criteria
+                [
+                    'name' => $data['name'],
+                    'password' => Hash::make($data['password']) , // Encrypt the password before storing
+                    'email_verification_token' => $token 
+                    ]
+            );
+
+            Mail::to($user->email)->send(new EmailVerificationMail($user))  ;
+
+            return back()->with('success', 'We have sent a verification link to your email account');
+        }
+
     }
+
 
     // Show Login Form
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('pages.login');
     }
 
     // Handle Login
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        
+        // Check if user exists first
+        $user = User::where('email', $credentials['email'])->whereNotNull('email_verified_at')->first();
+        
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'Please register with this email address.',
+            ]);
+        }
+        
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'password' => 'Incorrect password. Please try again.',
+            ]);
         }
 
-        return back()->withErrors([
-            'email' => 'Invalid credentials.',
-        ]);
+        $request->session()->regenerate();
+        return redirect()->intended('/');
+        
     }
 
     // Handle Logout
@@ -66,5 +95,20 @@ class AuthController extends Controller
 
         return redirect('/login');
     }
-}
 
+    //email verify
+    public function emailVerify($token){
+
+        $user = User::where('email_verification_token', $token)->first();
+
+        if (!$user) {
+            return redirect('/')->with('error', 'Invalid verification token.');
+        }
+    
+        $user->email_verified_at = now();
+        $user->email_verification_token = null;
+        $user->save();
+    
+        return redirect()->route('login')->with('success', 'Email verified successfully!');
+    }
+}

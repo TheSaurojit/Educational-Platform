@@ -381,15 +381,34 @@
                 <h2 class="form-title">Sign In</h2>
                 <p class="form-subtitle">Access your account and continue exploring mathematics</p>
 
-                <form id="signinForm">
+
+                @if ($errors->any())
+                <div style="color: red">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                @if (session('success'))
+                <div style="color:green">
+                    {{ session('success') }}
+                </div>
+                @endif
+
+
+                <form id="signinForm" action="{{ route('login') }}" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="Enter your email">
+                        <input type="email" name="email" id="email" placeholder="Enter your email">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Enter your password">
+                        <input type="password" name="password" id="password" placeholder="Enter your password">
                     </div>
 
                     <div class="remember-forgot">
@@ -400,7 +419,7 @@
                         <a href="#" class="forgot-pass">Forgot password?</a>
                     </div>
 
-                    <button type="button" class="submit-btn" id="signinBtn">Sign In</button>
+                    <button type="submit" class="submit-btn" id="signinBtn">Sign In</button>
 
                     {{-- <div class="social-login">
                         <p>Or continue with</p>
@@ -417,17 +436,6 @@
         </div>
     </div>
 
-    <script>
-
-        document.getElementById('signinBtn').addEventListener('click', () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-
-            console.log('Sign In:', { email, password });
-     
-            alert('Sign in successful!');
-        });
-    </script>
+    
 </body>
 </html>

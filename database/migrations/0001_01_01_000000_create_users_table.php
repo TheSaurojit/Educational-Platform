@@ -17,18 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('email_verification_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            // New fields
-            $table->string('profile_image')->nullable(); // URL or path to profile image
-            $table->text('address')->nullable(); // User's address
-            $table->json('mathematical_interests')->nullable(); // Array of 1 to 5 interests
-            $table->text('achievements')->nullable(); // User's achievements
-            $table->string('facebook')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('linkedin')->nullable();
-            $table->string('youtube')->nullable();
-            $table->boolean('is_mathematician')->default(false);
+           
         });
         
 

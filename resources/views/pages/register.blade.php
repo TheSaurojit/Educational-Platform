@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,7 +129,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
             transform: rotate(45deg);
             z-index: 1;
         }
@@ -159,10 +160,25 @@
             user-select: none;
         }
 
-        .symbol-1 { top: 10%; left: 20%; }
-        .symbol-2 { top: 30%; right: 15%; }
-        .symbol-3 { bottom: 25%; left: 10%; }
-        .symbol-4 { bottom: 10%; right: 20%; }
+        .symbol-1 {
+            top: 10%;
+            left: 20%;
+        }
+
+        .symbol-2 {
+            top: 30%;
+            right: 15%;
+        }
+
+        .symbol-3 {
+            bottom: 25%;
+            left: 10%;
+        }
+
+        .symbol-4 {
+            bottom: 10%;
+            right: 20%;
+        }
 
         .auth-form {
             flex: 1;
@@ -322,8 +338,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Responsive */
@@ -358,10 +381,12 @@
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <a href="#" class="logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2962ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#2962ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                 <path d="M8 7h8"></path>
@@ -370,7 +395,7 @@
             </svg>
             Maths-matchmaker
         </a>
-      
+
     </header>
 
     <div class="container">
@@ -382,7 +407,8 @@
                 <div class="math-symbols symbol-4">√</div>
                 <div class="image-content">
                     <h1>Join Our Community</h1>
-                    <p>Connect with fellow math enthusiasts. Share problems, find collaborators, and expand your mathematical horizons.</p>
+                    <p>Connect with fellow math enthusiasts. Share problems, find collaborators, and expand your
+                        mathematical horizons.</p>
                 </div>
             </div>
 
@@ -391,29 +417,42 @@
                     <h2 class="form-title">Create Account</h2>
                     <p class="form-subtitle">Join our mathematics community today</p>
 
-                    <form action="#">
+                    @if ($errors->any())
+                        <div style="color: red">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('register') }}" method="POST">
+                        @csrf
+
                         <div class="form-group">
-                            <label for="fullname">Full Name</label>
-                            <input type="text" id="fullname" placeholder="Enter your full name">
+                            <label for="fullname"> Name</label>
+                            <input type="text" id="fullname" name="name" placeholder="Enter your  name">
                         </div>
 
                         <div class="form-group">
                             <label for="signup-email">Email</label>
-                            <input type="email" id="signup-email" placeholder="Enter your email">
+                            <input type="email" name="email" id="signup-email" placeholder="Enter your email">
                         </div>
 
                         <div class="form-group">
                             <label for="signup-password">Password</label>
-                            <input type="password" id="signup-password" placeholder="Create a password">
+                            <input type="password" name="password" id="signup-password" placeholder="Create a password">
                         </div>
 
                         <div class="form-group">
                             <label for="confirm-password">Confirm Password</label>
-                            <input type="password" id="confirm-password" placeholder="Confirm your password">
+                            <input type="password" name="password_confirmation" id="confirm-password"
+                                placeholder="Confirm your password">
                         </div>
 
-                        <button type="button" class="submit-btn" id="signupBtn">Create Account</button>
-{{-- 
+                        <button type="submit" class="submit-btn" id="signupBtn">Create Account</button>
+                        {{-- 
                         <div class="social-login">
                             <p>Or sign up with</p>
                             <div class="social-icons">
@@ -438,26 +477,24 @@
     </div>
 
     <script>
-      
-        document.getElementById('signupBtn').addEventListener('click', () => {
-            const fullname = document.getElementById('fullname').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            
+        // document.getElementById('signupBtn').addEventListener('click', () => {
+        //     const fullname = document.getElementById('fullname').value;
+        //     const email = document.getElementById('signup-email').value;
+        //     const password = document.getElementById('signup-password').value;
+        //     const confirmPassword = document.getElementById('confirm-password').value;
 
-            if (password !== confirmPassword) {
-                alert('Passwords do not match!');
-                return;
-            }
-         
-            console.log('Sign Up:', { fullname, email, password });
-  
 
-            alert('Account Created');
-        });
+        //     if (password !== confirmPassword) {
+        //         alert('Passwords do not match!');
+        //         return;
+        //     }
 
-  
+        //     console.log('Sign Up:', { fullname, email, password });
+
+
+        //     alert('Account Created');
+        // });
     </script>
 </body>
+
 </html>

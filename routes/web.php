@@ -42,20 +42,21 @@ Route::get('/chat', function () {
     return view('pages.chat');
 });
 
-Route::get('/login', function () {
-    return view('pages.login');
-});
 
 
 // Authentication
 
 Route::controller(AuthController::class)->group(function(){
 
-    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/register',  'showRegisterForm')->name('register');
+    Route::post('/register', 'register')->name('register');
+
     
-    // Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    // Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/login','showLoginForm')->name('login');
+    Route::post('/login','login')->name('login');
+
+    
+    Route::get('/verify/{token}','emailVerify')->name('email.verify');
     
     // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
