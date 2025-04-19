@@ -189,38 +189,46 @@
             }
         });
 
-        // Add interest tag
+
         function addInterest(interest) {
-            selectedInterests.push(interest);
+    selectedInterests.push(interest);
 
-            const tag = document.createElement('div');
-            tag.className = 'interest-tag';
-            tag.innerHTML = `${interest} <span>✕</span>`;
+    const tag = document.createElement('div');
+    tag.className = 'interest-tag';
+    tag.innerHTML = `${interest} <span>✕</span>`;
 
-            tag.querySelector('span').addEventListener('click', () => {
-                removeInterest(interest);
-            });
+   
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'mathematical_interests[]';
+    hiddenInput.value = interest;
+    hiddenInput.className = 'interest-hidden-input';
+    tag.appendChild(hiddenInput);
 
-            interestsContainer.appendChild(tag);
-            updateInterestCount();
-            updateOptionsState();
-        }
+    tag.querySelector('span').addEventListener('click', () => {
+        removeInterest(interest);
+    });
 
-        // Remove interest tag
+    interestsContainer.appendChild(tag);
+    updateInterestCount();
+    updateOptionsState();
+}
+
+        
         function removeInterest(interest) {
-            selectedInterests = selectedInterests.filter(item => item !== interest);
+    selectedInterests = selectedInterests.filter(item => item !== interest);
 
-            // Remove tag from container
-            const tags = interestsContainer.querySelectorAll('.interest-tag');
-            tags.forEach(tag => {
-                if (tag.textContent.replace('✕', '').trim() === interest) {
-                    tag.remove();
-                }
-            });
 
-            updateInterestCount();
-            updateOptionsState();
+    const tags = interestsContainer.querySelectorAll('.interest-tag');
+    tags.forEach(tag => {
+        if (tag.textContent.replace('✕', '').trim() === interest) {
+            tag.remove();
         }
+    });
+
+    updateInterestCount();
+    updateOptionsState();
+}
 
         // Update interest count display
         function updateInterestCount() {

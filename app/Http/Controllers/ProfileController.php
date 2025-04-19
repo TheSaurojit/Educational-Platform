@@ -17,7 +17,7 @@ class ProfileController extends Controller
         $validatedData = $request->validate([
             'profile_image' => 'nullable|string',
             'address' => 'nullable|string',
-            'mathematical_interests' => 'nullable|array',
+            'mathematical_interests' => 'required|array|min:1|max:5',
             'achievements' => 'nullable|string',
             'is_mathematician' => 'required',
 
