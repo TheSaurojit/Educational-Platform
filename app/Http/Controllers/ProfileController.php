@@ -19,7 +19,7 @@ class ProfileController extends Controller
             'address' => 'nullable|string',
             'mathematical_interests' => 'nullable|array',
             'achievements' => 'nullable|string',
-            'is_mathematician' => 'nullable|boolean',
+            'is_mathematician' => 'required',
 
             'facebook' => 'nullable|string',
             'twitter' => 'nullable|string',
