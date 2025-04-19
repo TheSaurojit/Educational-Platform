@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('mathematical_interests')->nullable(); // Array of 1 to 5 interests
             $table->text('achievements')->nullable(); // User's achievements
             $table->string('facebook')->nullable();
-            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('youtube')->nullable();
             $table->boolean('is_mathematician')->default(false);

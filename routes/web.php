@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('pages.home');
@@ -42,10 +43,13 @@ Route::get('/chat', function () {
     return view('pages.chat');
 });
 
+Route::controller(ProfileController::class)->group(function(){
+    Route::get('/edit-profile',  'showCreateForm')->name('edit-profile');
+    Route::post('/edit-profile',  'store')->name('edit-profile');
 
+});
 
 // Authentication
-
 Route::controller(AuthController::class)->group(function(){
 
     Route::get('/register',  'showRegisterForm')->name('register');
@@ -58,7 +62,7 @@ Route::controller(AuthController::class)->group(function(){
     
     Route::get('/verify/{token}','emailVerify')->name('email.verify');
     
-    // Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
 
