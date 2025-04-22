@@ -30,25 +30,24 @@ class AuthController extends Controller
         $user = User::where('email', $data['email'])->whereNotNull('email_verified_at')->first();
 
         if ($user) {
-            return back()->withErrors(['error'=> 'Email already exists ']);
+            return back()->withErrors(['error' => 'Email already exists ']);
         } else {
-            
+
             $token = Str::random(50);
 
             $user = User::updateOrCreate(
                 ['email' => $data['email']], // Search criteria
                 [
                     'name' => $data['name'],
-                    'password' => Hash::make($data['password']) , // Encrypt the password before storing
-                    'email_verification_token' => $token 
-                    ]
+                    'password' => Hash::make($data['password']), // Encrypt the password before storing
+                    'email_verification_token' => $token
+                ]
             );
 
-            Mail::to($user->email)->send(new EmailVerificationMail($user))  ;
+            Mail::to($user->email)->send(new EmailVerificationMail($user));
 
-            return back()->with('success', 'We have sent a verification link to your email account');
+            return to_route('login')->with('success', 'We have sent a verification link to your email account');
         }
-
     }
 
 
@@ -65,25 +64,24 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        
+
         // Check if user exists first
         $user = User::where('email', $credentials['email'])->whereNotNull('email_verified_at')->first();
-        
+
         if (!$user) {
             return back()->withErrors([
-                'email' => 'Please register with this email address.',
+                'email' => 'Please register with this email address.'
             ]);
         }
-        
+
         if (!Auth::attempt($credentials)) {
             return back()->withErrors([
-                'password' => 'Incorrect password. Please try again.',
+                'password' => 'Incorrect password. Please try again.'
             ]);
         }
 
         $request->session()->regenerate();
-        return redirect()->intended('/');
-        
+        return to_route('profile');
     }
 
     // Handle Logout
@@ -93,22 +91,23 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return to_route('login');
     }
 
     //email verify
-    public function emailVerify($token){
+    public function emailVerify($token)
+    {
 
         $user = User::where('email_verification_token', $token)->first();
 
         if (!$user) {
-            return redirect('/')->with('error', 'Invalid verification token.');
+            return to_route('login')->withErrors(['error' => 'Invalid verification token ']);
         }
-    
+
         $user->email_verified_at = now();
         $user->email_verification_token = null;
         $user->save();
-    
-        return redirect()->route('login')->with('success', 'Email verified successfully!');
+
+        return to_route('login')->with('success', 'Email verified successfully!');
     }
 }

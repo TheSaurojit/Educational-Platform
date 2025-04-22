@@ -13,7 +13,7 @@
         <p>Find fellow math enthusiasts from around the world. Share your passion, collaborate on problems, and make
             meaningful connections.</p>
         <div class="cta-buttons">
-            <a href="{{ route('edit-profile') }}"><button class="primary-btn">Create Your Profile</button></a>
+            <a href="{{ route('create-profile') }}"><button class="primary-btn">Create Your Profile</button></a>
             <a href="/matches"><button class="secondary-btn">Explore Matches</button></a> 
         </div>
     </section>

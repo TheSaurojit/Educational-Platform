@@ -16,30 +16,34 @@
 
     <!-- Profile section -->
     <div class="profile-section">
-        <img src="https://thispersondoesnotexist.com/" alt="Profile picture" class="profile-image">
+        <img src="{{ $profile->profile_image }}" alt="Profile picture" class="profile-image">
         
         <div class="profile-info">
             <div class="profile-header">
                 <div>
-                    <h1 class="profile-name">Alex Johnson</h1>
+                    <h1 class="profile-name">{{ Auth::user()->name }}</h1>
                   
                     <div class="location">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                             <circle cx="12" cy="10" r="3"></circle>
                         </svg>
-                        New York, USA
+
+                        {{ $profile->address }}
+
+                   
+
                     </div>
-                    <p class="bio">Math major at Columbia University with a passion for number theory and abstract algebra. I enjoy solving complex mathematical puzzles and participating in math competitions.</p>
+                    {{-- <p class="bio">Math major at Columbia University with a passion for number theory and abstract algebra. I enjoy solving complex mathematical puzzles and participating in math competitions.</p> --}}
                 </div>
 
-                <button class="edit-profile-btn">
+                <a href="{{ route('create-profile') }}" class="edit-profile-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                     </svg>
                     Edit Profile
-                </button>
+                </a>
             </div>
             
             <div class="social-links">
@@ -76,9 +80,11 @@
             <div class="card">
                 <h2 class="card-title">Mathematical Interests</h2>
                 <div class="tag-list">
-                    <div class="tag">Number Theory</div>
-                    <div class="tag">Abstract Algebra</div>
-                    <div class="tag">Cryptography</div>
+
+                    @foreach ( $profile->getMathematicalInterests() as $interest )
+                        
+                    <div class="tag">{{ $interest }}</div>
+                    @endforeach
                 </div>
             </div>
 
@@ -92,9 +98,11 @@
                     Achievements
                 </h2>
                 <ul class="achievement-list">
-                    <li class="achievement-item">Gold Medal, International Mathematical Olympiad 2020</li>
-                    <li class="achievement-item">First Place, National Mathematics Competition 2019</li>
-                    <li class="achievement-item">Published paper on prime number distribution in undergraduate journal</li>
+                    <li class="achievement-item">
+                        {{ $profile->achievements }}
+                    </li>
+                    {{-- <li class="achievement-item">First Place, National Mathematics Competition 2019</li>
+                    <li class="achievement-item">Published paper on prime number distribution in undergraduate journal</li> --}}
                 </ul>
             </div>
         </div>
@@ -133,11 +141,7 @@
 
 @section('script-section')
     <script>
-         const editProfileBtn = document.querySelector('.edit-profile-btn');
-        
-        editProfileBtn.addEventListener('click', () => {
-            alert('Edit profile functionality would go here');
-        });
+     
         
         // Placeholder image fallback
         const profileImage = document.querySelector('.profile-image');
