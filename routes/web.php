@@ -68,5 +68,5 @@ Route::controller(AuthController::class)->group(function () {
 
     Route::get('/verify/{token}', 'emailVerify')->name('email.verify');
 
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', 'logout')->name('logout');
 });

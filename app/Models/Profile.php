@@ -11,15 +11,15 @@ class Profile extends Model
     protected $guarded = [];
 
    
-    // protected function mathematicalInterests(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn (string $value) => json_decode($value , true),
-    //             );
-    // }
-
-    public function getMathematicalInterests() {
-
-        return json_decode($this->mathematical_interests , true );
+    protected function mathematicalInterests(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => json_decode($value , true),
+                );
     }
+
+    // public function getMathematicalInterests() {
+
+    //     return json_decode($this->mathematical_interests , true );
+    // }
 }

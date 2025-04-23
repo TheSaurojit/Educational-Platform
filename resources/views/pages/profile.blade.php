@@ -81,7 +81,7 @@
                 <h2 class="card-title">Mathematical Interests</h2>
                 <div class="tag-list">
 
-                    @foreach ( $profile->getMathematicalInterests() as $interest )
+                    @foreach ( $profile->mathematical_interests as $interest )
                         
                     <div class="tag">{{ $interest }}</div>
                     @endforeach

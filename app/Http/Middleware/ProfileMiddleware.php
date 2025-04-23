@@ -18,7 +18,8 @@ class ProfileMiddleware
     {
         if (!Auth::user()->profile) {
 
-            return to_route('create-profile')->withErrors(['error' => 'Create Profile First']) ;
+            return to_route('create-profile') ;
+            // ->withErrors(['error' => 'Create Profile First']) ;
         }
         return $next($request);
     }

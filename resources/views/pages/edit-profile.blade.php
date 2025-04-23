@@ -131,7 +131,7 @@
 @section('script-section')
     <script>
      
-        const  prevSelectedInterests = <?= $data ? $data['mathematical_interests'] : '[]' ?>
+    const prevSelectedInterests = <?= json_encode($data ? $data['mathematical_interests'] : []) ?>;
 
         const imageUploadArea = document.getElementById('image-upload-area');
         const fileInput = document.getElementById('file-input');
