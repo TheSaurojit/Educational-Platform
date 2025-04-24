@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->index();
+            $table->uuid('user_id'); // UUID instead 
             $table->string('profile_image')->nullable(); // URL or path to profile image
             $table->text('address')->nullable(); // User's address
             $table->json('mathematical_interests')->nullable(); // Array of 1 to 5 interests
@@ -24,6 +24,13 @@ return new class extends Migration
             $table->string('youtube')->nullable();
             $table->boolean('is_mathematician')->default(false);
             $table->timestamps();
+
+
+            //foreign id
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            //index
+            $table->index('user_id');
         });
     }
 

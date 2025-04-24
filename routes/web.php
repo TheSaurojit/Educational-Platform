@@ -2,19 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DiscoverController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\ProfileMiddleware;
 
 Route::get('/', function () {
     return view('pages.home');
-});
+})->name('home');
 
-
-
-
-Route::get('/discover', function () {
-    return view('pages.discover');
-});
 
 Route::get('/matches', function () {
     return view('pages.matches');
@@ -42,7 +36,14 @@ Route::get('/chat', function () {
     return view('pages.chat');
 });
 
+
+
 Route::middleware('auth')->group(function () {
+
+    Route::controller(DiscoverController::class)->group(function () {
+
+        Route::get('/discover', 'index')->name('discover');
+    });
 
     Route::controller(ProfileController::class)->group(function () {
 

@@ -113,7 +113,7 @@
            
 
             <!-- Matches section -->
-            <div class="card">
+            {{-- <div class="card">
                 <h2 class="card-title">Your Matches</h2>
                 
                 <div class="match-item">
@@ -126,7 +126,7 @@
                 </div>
                 
                 <a href="#" class="view-all-btn">View All Matches</a>
-            </div>
+            </div> --}}
         </div>
     </div>
 
