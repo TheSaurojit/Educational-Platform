@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'isAdmin' => AdminMiddleware::class ,
             'isUser' => UserMiddleware::class ,
-            'hasProfile' => ProfileMiddleware::class ,
+            'hasProfile' => ProfileMiddleware::class  ,
         ]);
 
     })
