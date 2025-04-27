@@ -46,7 +46,6 @@
 
                     $profile_image = $post->user->profile->profile_image;
 
-
                 @endphp
 
 
