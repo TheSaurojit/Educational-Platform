@@ -27,7 +27,7 @@ Route::get('/profilepublic', function () {
     return view('pages.profile_public');
 });
 
-
+//12
 
 
 Route::get('/chat', function () {
