@@ -35,6 +35,10 @@
         ]
     },
     "scripts": {
+       "db:fresh": [
+            "@php artisan migrate:fresh",
+            "@php artisan db:seed"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

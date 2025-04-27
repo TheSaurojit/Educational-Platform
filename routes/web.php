@@ -5,14 +5,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\DiscoverController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MatchController;
 use App\Http\Controllers\ProfileController;
 
+Route::view('/admin/home', 'admin.home');
 
 
 
-Route::get('/matches', function () {
-    return view('pages.matches');
-});
 
 Route::get('/notifications', function () {
     return view('pages.notifications');
@@ -27,7 +26,6 @@ Route::get('/profilepublic', function () {
     return view('pages.profile_public');
 });
 
-//12345454
 
 
 Route::get('/chat', function () {
@@ -39,9 +37,14 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::middleware('isUser')->group(function () {
 
+    Route::controller(MatchController::class)->group(function () {
+
+        Route::get('/matches', 'matchView')->name('matches')->middleware('hasProfile');
+    });
+
     Route::controller(CommunityController::class)->group(function () {
 
-        Route::get('/community', 'getPosts')->name('community');
+        Route::get('/community', 'communityView')->name('community');
 
         Route::get('/create-community', 'createCommunityView')->name('create-community')->middleware('hasProfile');
         Route::post('/create-community', 'createCommunity')->name('create-community')->middleware('hasProfile');
@@ -51,7 +54,7 @@ Route::middleware('isUser')->group(function () {
 
     Route::controller(DiscoverController::class)->group(function () {
 
-        Route::get('/discover', 'index')->name('discover');
+        Route::get('/discover', 'index')->name('discover')->middleware('hasProfile');
     });
 
     Route::controller(ProfileController::class)->group(function () {

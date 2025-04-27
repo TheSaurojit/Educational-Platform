@@ -8,20 +8,19 @@ use Illuminate\Support\Facades\Auth;
 
 class DiscoverController extends Controller
 {
-    public function getMatheMaticians()
+
+
+
+    public function  index()
     {
-        return User::where('id', '!=', Auth::id())
+        $mathematicians = User::where('id', '!=', Auth::id())
             ->whereHas('profile', function ($query) {
                 $query->where('is_mathematician', true);
             })
             ->with('profile')
             ->get();
-    }
 
-    
-    public function  index()
-    {
-        $mathematicians = $this->getMatheMaticians();
+            
         return view('pages.discover', compact('mathematicians'));
     }
 }

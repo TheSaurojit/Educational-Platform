@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class CommunityController extends Controller
 {
 
-    public function getPosts()
+    public function communityView()
     {
         $posts = Community::with(['user.profile'])->latest()->get();
         return view('pages.community', compact('posts'));
