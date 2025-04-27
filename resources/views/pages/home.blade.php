@@ -77,119 +77,60 @@
         </div>
 
         <div class="mathematician-cards">
-            <div class="mathematician-card">
-                <div class="mathematician-image">
-                    <img src="/api/placeholder/400/400" alt="Alex Johnson" />
-                </div>
-                <div class="mathematician-info">
-                    <h3>Alex Johnson</h3>
-                    <div class="location">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        <span>New York, USA</span>
-                    </div>
 
-                    <div class="interests-section">
-                        <h4>Interests</h4>
-                        <div class="interest-tags">
-                            <span class="interest-tag">Number Theory</span>
-                            <span class="interest-tag">Abstract Algebra</span>
-                            <span class="interest-tag">Cryptography</span>
+            @foreach ($mathematicians as $user)
+                
+                @php
+                    $image = $user->profile->profile_image;
+                    $name = $user->name;
+                    $interests = $user->profile->mathematical_interests;
+                    $achievements = $user->profile->achievements;
+                    $address = $user->profile->address ;
+
+                @endphp
+
+
+
+                <div class="mathematician-card">
+                    <div class="mathematician-image">
+                        <img src="{{ $image }}" alt="Alex Johnson" />
+                    </div>
+                    <div class="mathematician-info">
+                        <h3>{{ $name }}</h3>
+                        <div class="location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>{{ $address }}</span>
                         </div>
-                    </div>
 
-                    <div class="achievements-section">
-                        <h4>Achievements</h4>
-                        <ul class="achievements-list">
-                            <li>Gold Medal, International Mathematical Olympiad 2020</li>
-                            <li>First Place, National Mathematics Competition 2019</li>
-                            <li class="more-link">+ 1 more</li>
-                        </ul>
-                    </div>
-
-                    <a href="#" class="view-profile-btn">View Profile</a>
-                </div>
-            </div>
-
-            <div class="mathematician-card">
-                <div class="mathematician-image">
-                    <img src="/api/placeholder/400/400" alt="Sophia Chen" />
-                </div>
-                <div class="mathematician-info">
-                    <h3>Sophia Chen</h3>
-                    <div class="location">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        <span>Beijing, China</span>
-                    </div>
-
-                    <div class="interests-section">
-                        <h4>Interests</h4>
-                        <div class="interest-tags">
-                            <span class="interest-tag">Complex Analysis</span>
-                            <span class="interest-tag">Topology</span>
-                            <span class="interest-tag">Mathematical Physics</span>
+                        <div class="interests-section">
+                            <h4>Interests</h4>
+                            <div class="interest-tags">
+                                @foreach ($interests as $int)
+                                    <span class="interest-tag">{{ $int }}</span>
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="achievements-section">
-                        <h4>Achievements</h4>
-                        <ul class="achievements-list">
-                            <li>Awarded National Science Foundation Graduate Research Fellowship</li>
-                            <li>Published three research papers in leading math journals</li>
-                            <li class="more-link">+ 1 more</li>
-                        </ul>
-                    </div>
-
-                    <a href="#" class="view-profile-btn">View Profile</a>
-                </div>
-            </div>
-
-            <div class="mathematician-card">
-                <div class="mathematician-image">
-                    <img src="/api/placeholder/400/400" alt="Marcus Rivera" />
-                </div>
-                <div class="mathematician-info">
-                    <h3>Marcus Rivera</h3>
-                    <div class="location">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        <span>São Paulo, Brazil</span>
-                    </div>
-
-                    <div class="interests-section">
-                        <h4>Interests</h4>
-                        <div class="interest-tags">
-                            <span class="interest-tag">Applied Mathematics</span>
-                            <span class="interest-tag">Differential Equations</span>
-                            <span class="interest-tag">Numerical Analysis</span>
+                        <div class="achievements-section">
+                            <h4>Achievements</h4>
+                            <ul class="achievements-list">
+                                <li>{{ $achievements }}</li>
+                                
+                            </ul>
                         </div>
-                    </div>
 
-                    <div class="achievements-section">
-                        <h4>Achievements</h4>
-                        <ul class="achievements-list">
-                            <li>Lead developer of an optimization algorithm used by major energy companies</li>
-                            <li>Speaker at International Congress of Mathematicians 2022</li>
-                            <li class="more-link">+ 1 more</li>
-                        </ul>
+                        <a href="#" class="view-profile-btn">View Profile</a>
                     </div>
-
-                    <a href="#" class="view-profile-btn">View Profile</a>
                 </div>
-            </div>
+            @endforeach
+
+
+
         </div>
     </section>
     <section class="explore-fields">

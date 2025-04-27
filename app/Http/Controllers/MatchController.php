@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class FriendshipController extends Controller
+class MatchController extends Controller
 {
     // Send friend request
     public function sendRequest($receiverId)

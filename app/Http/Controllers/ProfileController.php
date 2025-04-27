@@ -28,7 +28,7 @@ class ProfileController extends Controller
     public function create(Request $request)
     {
         $rules = [
-            'profile_image' => ['required', 'image', 'mimes:jpg,png,jpeg'],
+            'profile_image' => ['required', 'image', 'mimes:jpg,png,jpeg' , 'max:2048'],
             'is_mathematician' => ['required'],
             'mathematical_interests' => ['required', 'array', 'min:1', 'max:5'],
             'address' => ['nullable', 'string'],
