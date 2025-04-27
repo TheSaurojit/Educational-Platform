@@ -356,7 +356,7 @@
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Terms of Service</a></li>
                     <li><a href="#">Cookie Policy</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    {{-- <li><a href="#">Contact Us</a></li> --}}
                 </ul>
             </div>
         </div>

@@ -6,6 +6,7 @@
 
 @section('body')
 <main class="container">
+    <div class="community-header">
     <a href="/" class="back-link">
         <span class="back-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -15,45 +16,19 @@
         </span>
         Back to Home
     </a>
-
+    <a href="/createpost" class="create-post-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Create Post
+    </a>
+    </div>
     <h1 class="page-title">Community</h1>
     <p class="page-subtitle">Share ideas and connect with fellow math enthusiasts.</p>
 
-    <!-- Post Creation Section -->
-    <div class="create-post-container">
-        <div class="create-post-header">
-            <h2 class="create-post-title">Create a Post</h2>
-        </div>
-        <form class="create-post-form" id="create-post-form">
-            <input type="text" class="post-input" id="post-title" placeholder="Post title" required>
-            <textarea class="post-input post-textarea" id="post-content" placeholder="Share your mathematical insights, questions, or interesting discoveries..." required></textarea>
-            <div class="file-upload">
-                <input type="file" id="post-image" class="file-upload-input" accept="image/*" onchange="previewImage(this)">
-                <label for="post-image" class="file-upload-label">
-                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                        <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                    Add Image
-                </label>
-            </div>
-            <div class="image-upload-container" id="image-container">
-                <div class="remove-image-btn" onclick="removeImage()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </div>
-                <img id="image-preview" class="image-preview" src="#" alt="Preview">
-            </div>
-            <button type="submit" class="post-btn">Post</button>
-        </form>
-    </div>
-
-    <!-- Community Feed Section -->
     <div class="community-feed" id="community-feed">
-        <!-- Posts will be dynamically added here -->
+       
     </div>
 </main>
 @endsection
@@ -210,120 +185,93 @@
     }
 
     function renderComments(comments) {
-if (comments.length === 0) {
-    return `<div class="no-comments">No comments yet. Be the first to comment!</div>`;
-}
+        if (comments.length === 0) {
+            return `<div class="no-comments">No comments yet. Be the first to comment!</div>`;
+        }
 
-// Filter top-level comments (those without a parentId)
-const topLevelComments = comments.filter(comment => !comment.parentId);
+        // Filter top-level comments (those without a parentId)
+        const topLevelComments = comments.filter(comment => !comment.parentId);
 
-let commentHTML = '';
+        let commentHTML = '';
 
-// For each top level comment
-topLevelComments.forEach(comment => {
-    // Add the comment
-    commentHTML += `
-        <div class="comment" data-comment-id="${comment.id}">
-            <img src="${comment.author.profilePic}" alt="${comment.author.name}" class="comment-author-pic">
-            <div class="comment-content">
-                <div class="comment-author-name">${comment.author.name}</div>
-                <div class="comment-text">${comment.text}</div>
-                <div class="comment-actions">
-                    <span class="comment-action" onclick="toggleReplyForm(${comment.id})">Reply</span>
-                </div>
-                ${comment.isReplyFormVisible ? 
-                    `<form class="reply-form" onsubmit="addReply(event, ${comment.id})">
-                        <input type="text" class="comment-input" placeholder="Write a reply..." required>
-                        <button type="submit" class="comment-submit">Reply</button>
-                    </form>` : ''
-                }
-            </div>
-        </div>
-    `;
-    
-    // Find all replies for this comment, direct and indirect (all descendants)
-    const getAllDescendantReplies = (commentId) => {
-        // Get direct replies
-        const directReplies = comments.filter(c => c.parentId === commentId);
-        
-        // For each direct reply, get its replies recursively
-        let allReplies = [...directReplies];
-        directReplies.forEach(reply => {
-            const childReplies = getAllDescendantReplies(reply.id);
-            allReplies = [...allReplies, ...childReplies];
-        });
-        
-        return allReplies;
-    };
-    
-    // Get all replies for this comment in flattened order
-    const allReplies = getAllDescendantReplies(comment.id);
-    
-    // Sort replies by timestamp or ID to ensure proper order
-    // Assuming newer replies (higher IDs) should appear below older ones
-    allReplies.sort((a, b) => a.id - b.id);
-    
-    // Add all replies sequentially
-    allReplies.forEach(reply => {
-        commentHTML += `
-            <div class="reply" data-comment-id="${reply.id}" data-parent-id="${reply.parentId}">
-                <img src="${reply.author.profilePic}" alt="${reply.author.name}" class="comment-author-pic reply-author-pic">
-                <div class="comment-content">
-                    <div class="comment-author-name">${reply.author.name}</div>
-                    <div class="reply-indicator">Replying to @${findCommentAuthorName(comments, reply.parentId)}</div>
-                    <div class="comment-text">${reply.text}</div>
-                    <div class="comment-actions">
-                        <span class="comment-action" onclick="toggleReplyForm(${reply.id})">Reply</span>
+        // For each top level comment
+        topLevelComments.forEach(comment => {
+            // Add the comment
+            commentHTML += `
+                <div class="comment" data-comment-id="${comment.id}">
+                    <img src="${comment.author.profilePic}" alt="${comment.author.name}" class="comment-author-pic">
+                    <div class="comment-content">
+                        <div class="comment-author-name">${comment.author.name}</div>
+                        <div class="comment-text">${comment.text}</div>
+                        <div class="comment-actions">
+                            <span class="comment-action" onclick="toggleReplyForm(${comment.id})">Reply</span>
+                        </div>
+                        ${comment.isReplyFormVisible ? 
+                            `<form class="reply-form" onsubmit="addReply(event, ${comment.id})">
+                                <input type="text" class="comment-input" placeholder="Write a reply..." required>
+                                <button type="submit" class="comment-submit">Reply</button>
+                            </form>` : ''
+                        }
                     </div>
-                    ${reply.isReplyFormVisible ? 
-                        `<form class="reply-form" onsubmit="addReply(event, ${reply.id})">
-                            <input type="text" class="comment-input" placeholder="Write a reply..." required>
-                            <button type="submit" class="comment-submit">Reply</button>
-                        </form>` : ''
-                    }
                 </div>
-            </div>
-        `;
-    });
-});
+            `;
+            
+            // Find all replies for this comment, direct and indirect (all descendants)
+            const getAllDescendantReplies = (commentId) => {
+                // Get direct replies
+                const directReplies = comments.filter(c => c.parentId === commentId);
+                
+                // For each direct reply, get its replies recursively
+                let allReplies = [...directReplies];
+                directReplies.forEach(reply => {
+                    const childReplies = getAllDescendantReplies(reply.id);
+                    allReplies = [...allReplies, ...childReplies];
+                });
+                
+                return allReplies;
+            };
+            
+            // Get all replies for this comment in flattened order
+            const allReplies = getAllDescendantReplies(comment.id);
+            
+            // Sort replies by timestamp or ID to ensure proper order
+            // Assuming newer replies (higher IDs) should appear below older ones
+            allReplies.sort((a, b) => a.id - b.id);
+            
+            // Add all replies sequentially
+            allReplies.forEach(reply => {
+                commentHTML += `
+                    <div class="reply" data-comment-id="${reply.id}" data-parent-id="${reply.parentId}">
+                        <img src="${reply.author.profilePic}" alt="${reply.author.name}" class="comment-author-pic reply-author-pic">
+                        <div class="comment-content">
+                            <div class="comment-author-name">${reply.author.name}</div>
+                            <div class="reply-indicator">Replying to @${findCommentAuthorName(comments, reply.parentId)}</div>
+                            <div class="comment-text">${reply.text}</div>
+                            <div class="comment-actions">
+                                <span class="comment-action" onclick="toggleReplyForm(${reply.id})">Reply</span>
+                            </div>
+                            ${reply.isReplyFormVisible ? 
+                                `<form class="reply-form" onsubmit="addReply(event, ${reply.id})">
+                                    <input type="text" class="comment-input" placeholder="Write a reply..." required>
+                                    <button type="submit" class="comment-submit">Reply</button>
+                                </form>` : ''
+                            }
+                        </div>
+                    </div>
+                `;
+            });
+        });
 
-return commentHTML;
-}
+        return commentHTML;
+    }
 
-    // Function to render replies to a specific comment
-    function renderAllReplies(allComments, parentId) {
-// Find all direct replies to this comment/reply
-const replies = allComments.filter(comment => comment.parentId === parentId);
+    function findCommentAuthorName(comments, commentId) {
+        const comment = comments.find(c => c.id === commentId);
+        return comment ? comment.author.name : "Unknown";
+    }
 
-if (replies.length === 0) return '';
-
-// Render all replies as a flat list
-return replies.map(reply => `
-    <div class="reply" data-comment-id="${reply.id}" data-parent-id="${reply.parentId}">
-        <img src="${reply.author.profilePic}" alt="${reply.author.name}" class="comment-author-pic reply-author-pic">
-        <div class="comment-content">
-            <div class="comment-author-name">${reply.author.name}</div>
-            <div class="reply-indicator">Replying to @${findCommentAuthorName(allComments, reply.parentId)}</div>
-            <div class="comment-text">${reply.text}</div>
-            <div class="comment-actions">
-                <span class="comment-action" onclick="toggleReplyForm(${reply.id})">Reply</span>
-            </div>
-            ${reply.isReplyFormVisible ? 
-                `<form class="reply-form" onsubmit="addReply(event, ${reply.id})">
-                    <input type="text" class="comment-input" placeholder="Write a reply..." required>
-                    <button type="submit" class="comment-submit">Reply</button>
-                </form>` : ''
-            }
-        </div>
-    </div>
-`).join('');
-}
-function findCommentAuthorName(comments, commentId) {
-const comment = comments.find(c => c.id === commentId);
-return comment ? comment.author.name : "Unknown";
-}
     // Function to toggle like on a post
-    function toggleLike(postId) {
+    window.toggleLike = function(postId) {
         const post = posts.find(p => p.id === postId);
         if (post) {
             post.isLiked = !post.isLiked;
@@ -333,7 +281,7 @@ return comment ? comment.author.name : "Unknown";
     }
 
     // Function to toggle comments visibility
-    function toggleComments(postId) {
+    window.toggleComments = function(postId) {
         const post = posts.find(p => p.id === postId);
         if (post) {
             post.commentsVisible = !post.commentsVisible;
@@ -347,7 +295,7 @@ return comment ? comment.author.name : "Unknown";
     }
 
     // Function to toggle the reply form
-    function toggleReplyForm(commentId) {
+    window.toggleReplyForm = function(commentId) {
         // Find the comment in all posts
         for (const post of posts) {
             // Find the comment in the flat structure
@@ -361,7 +309,7 @@ return comment ? comment.author.name : "Unknown";
     }
 
     // Function to add a reply to a comment
-    function addReply(event, parentCommentId) {
+    window.addReply = function(event, parentCommentId) {
         event.preventDefault();
         const replyInput = event.target.querySelector('.comment-input');
         const replyText = replyInput.value.trim();
@@ -399,7 +347,7 @@ return comment ? comment.author.name : "Unknown";
     }
 
     // Function to add a new comment
-    function addComment(event, postId) {
+    window.addComment = function(event, postId) {
         event.preventDefault();
         const commentInput = event.target.querySelector('.comment-input');
         const commentText = commentInput.value.trim();
@@ -423,88 +371,15 @@ return comment ? comment.author.name : "Unknown";
         }
     }
 
-    // Function to preview the image before posting
-    function previewImage(input) {
-const container = document.getElementById('image-container');
-const preview = document.getElementById('image-preview');
-const file = input.files[0];
+    // Initialize the feed when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        convertExistingComments(); // Convert existing comments to the new format
+        renderPosts(); // Render all posts
 
-if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        preview.src = e.target.result;
-        container.classList.add('visible');
-    }
-    reader.readAsDataURL(file);
-}
-}
-
-
-    // Function to create a new post
-    document.getElementById('create-post-form').addEventListener('submit', function(event) {
-event.preventDefault();
-
-const title = document.getElementById('post-title').value.trim();
-const content = document.getElementById('post-content').value.trim();
-const imageContainer = document.getElementById('image-container');
-const imagePreview = document.getElementById('image-preview');
-
-if (title && content) {
-    posts.unshift({
-        id: Date.now(),
-        author: {
-            name: "You",
-            profilePic: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'><circle cx='12' cy='8' r='5'/><path d='M20 21v-2a7 7 0 0 0-14 0v2'/></svg>"
-        },
-        timestamp: "Just now",
-        title: title,
-        content: content,
-        image: imageContainer.classList.contains('visible') ? imagePreview.src : null,
-        likes: 0,
-        comments: [],
-        isLiked: false,
-        commentsVisible: false
+        window.addEventListener('resize', function() {
+            // You might need to re-render or adjust UI elements on resize
+            // This depends on your specific requirements
+        });
     });
-    
-    // Reset the form
-    this.reset();
-    
-    // Also explicitly reset the image preview
-    imageContainer.classList.remove('visible');
-    imagePreview.src = '#';
-    
-    // Render posts with the new post at the top
-    renderPosts();
-}
-});
-
-// Function to remove the image
-function removeImage() {
-const container = document.getElementById('image-container');
-const preview = document.getElementById('image-preview');
-const fileInput = document.getElementById('post-image');
-
-// Clear the file input
-fileInput.value = '';
-
-// Hide the container
-container.classList.remove('visible');
-
-// Clear the preview
-preview.src = '#';
-}
-document.getElementById('post-image').addEventListener('change', function() {
-previewImage(this);
-});
-// Initialize the feed when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-convertExistingComments(); // Convert existing comments to the new format
-renderPosts(); // Render all posts
-
-window.addEventListener('resize', function() {
-    // You might need to re-render or adjust UI elements on resize
-    // This depends on your specific requirements
-});
-});
 </script>
 @endsection

@@ -31,6 +31,10 @@ Route::get('/profilepublic', function () {
     return view('pages.profile_public');
 });
 
+Route::get('/createpost', function () {
+    return view('pages.create_post');
+});
+
 
 Route::get('/chat', function () {
     return view('pages.chat');
