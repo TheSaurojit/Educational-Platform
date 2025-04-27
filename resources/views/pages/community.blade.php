@@ -141,34 +141,12 @@
                     <p class="post-content-text">${post.content}</p>
                 </div>
                 <div class="post-stats">
-                    <div class="post-stat">
-                        <svg class="post-stat-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${post.isLiked ? '#2563eb' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"></path>
-                            <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                        </svg>
-                        ${post.likes} likes
-                    </div>
-                    <div class="post-stat">
-                        <svg class="post-stat-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        ${post.comments.length} comments
-                    </div>
+                    
+                  
                 </div>
                 <div class="post-actions">
-                    <div class="post-action ${post.isLiked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
-                        <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="${post.isLiked ? '#2563eb' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"></path>
-                            <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                        </svg>
-                        Like
-                    </div>
-                    <div class="post-action" onclick="toggleComments(${post.id})">
-                        <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        Comment
-                    </div>
+                 
+                  
                 </div>
                 <div class="post-comments ${post.commentsVisible ? 'comments-visible' : ''}">
                     <form class="comment-form" onsubmit="addComment(event, ${post.id})">

@@ -21,7 +21,7 @@
     <!-- Features Section -->
     <section class="features">
         <div class="section-header">
-            <h2>Why Maths-maker?</h2>
+            <h2>Why Maths-matchmaker?</h2>
             <p>Our platform is designed specifically for mathematics enthusiasts to find like-minded peers.</p>
         </div>
 
@@ -68,12 +68,12 @@
         <div class="section-header">
             <h2>Featured Mathematicians</h2>
             <p>Discover some of the brilliant minds already on our platform.</p>
-            <a href="#" class="view-all">View all mathematicians <svg xmlns="http://www.w3.org/2000/svg"
+            {{-- <a href="#" class="view-all">View all mathematicians <svg xmlns="http://www.w3.org/2000/svg"
                     width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
-                </svg></a>
+                </svg></a> --}}
         </div>
 
         <div class="mathematician-cards">
@@ -217,7 +217,7 @@
                 <span class="field-tag">Mathematical Logic</span>
             </div>
 
-            <button class="discover-more-btn">Discover More Fields</button>
+            {{-- <button class="discover-more-btn">Discover More Fields</button> --}}
         </div>
     </section>
     <section class="faq-section">
