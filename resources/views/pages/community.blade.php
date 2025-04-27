@@ -46,8 +46,6 @@
 
                     $profile_image = $post->user->profile->profile_image;
 
-                    // $achievements = $user->profile->achievements;
-                    // $address = $user->profile->address ;
 
                 @endphp
 
@@ -173,48 +171,6 @@
             });
         }
 
-        // Function to render all posts
-        function renderPosts() {
-            const feedContainer = document.getElementById('community-feed');
-            feedContainer.innerHTML = '';
-
-            posts.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.className = 'post-card';
-                postElement.innerHTML = `
-                <div class="post-header">
-                    <img src="${post.author.profilePic}" alt="${post.author.name}" class="post-author-pic">
-                    <div class="post-author-info">
-                        <div class="post-author-name">${post.author.name}</div>
-                        <div class="post-timestamp">${post.timestamp}</div>
-                    </div>
-                </div>
-                ${post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : ''}
-                <div class="post-content">
-                    <h3 class="post-content-title">${post.title}</h3>
-                    <p class="post-content-text">${post.content}</p>
-                </div>
-                <div class="post-stats">
-                    
-                  
-                </div>
-                <div class="post-actions">
-                 
-                  
-                </div>
-                <div class="post-comments ${post.commentsVisible ? 'comments-visible' : ''}">
-                    <form class="comment-form" onsubmit="addComment(event, ${post.id})">
-                        <input type="text" class="comment-input" placeholder="Write a comment..." required>
-                        <button type="submit" class="comment-submit">Send</button>
-                    </form>
-                    <div class="comments-list">
-                        ${renderComments(post.comments)}
-                    </div>
-                </div>
-            `;
-                feedContainer.appendChild(postElement);
-            });
-        }
 
         function renderComments(comments) {
             if (comments.length === 0) {
