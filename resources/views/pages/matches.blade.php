@@ -15,7 +15,7 @@
 
     <div class="tabs">
         <div class="tab" id="potential-tab">Potential Matches</div>
-        <div class="tab" id="your-tab">Your Matches</div>
+        <div class="tab active" id="your-tab">Your Matches</div>
     </div>
 
     <div class="search-filter">
@@ -23,13 +23,118 @@
             <span class="search-icon">🔍</span>
             <input type="text" class="search-input" id="search-input" placeholder="Search matches...">
         </div>
-        <button class="filter-btn">
+        <button class="filter-btn" id="filter-btn">
             <span class="filter-icon">≡</span> Filter by Interest
         </button>
+        
+        <!-- Filter Dropdown -->
+        <div class="filter-dropdown" id="filter-dropdown">
+            <div class="dropdown-arrow"></div>
+            <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 18px;">Math Interests</h3>
+            <button class="clear-filter-btn" id="clear-filter-btn">Clear Filter</button>
+            
+            <div class="interests-container">
+                @foreach(['Number Theory', 'Abstract Algebra', 'Calculus', 'Real Analysis', 'Complex Analysis', 
+                         'Topology', 'Differential Geometry', 'Linear Algebra', 'Combinatorics', 'Graph Theory',
+                         'Probability Theory', 'Statistics', 'Mathematical Physics', 'Algebraic Geometry',
+                         'Cryptography', 'Mathematical Biology', 'Data Science', 'Numerical Analysis',
+                         'Optimization', 'Machine Learning'] as $interest)
+                    <div class="interest-pill" data-interest="{{ $interest }}">{{ $interest }}</div>
+                @endforeach
+            </div>
+        </div>
     </div>
 
+
+<div id="potential-matches-content" style="display: none;">
+
+  <div class="mathematician-card">
+      <img src="https://via.placeholder.com/400x300" alt="Sophia Chen" class="mathematician-photo">
+      <div class="mathematician-info">
+          <h2 class="mathematician-name">Sophia Chen</h2>
+          <p class="mathematician-bio">Fields medalist specializing in number theory and algebraic geometry. Published groundbreaking research on elliptic curves.</p>
+
+          <p class="interests-label">Interests:</p>
+          <div class="interests-tags">
+              <div class="interest-tag">Number Theory</div>
+              <div class="interest-tag">Algebraic Geometry</div>
+              <div class="interest-tag">Complex Analysis</div>
+          </div>
+
+          <button class="connect-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <line x1="20" y1="8" x2="20" y2="14"></line>
+                  <line x1="23" y1="11" x2="17" y2="11"></line>
+              </svg>
+              Send Request
+          </button>
+      </div>
+  </div>
+  
+
+  <div class="match-card-empty" id="potential-empty-state" style="display: none;">
+      <h2 class="empty-message">No potential matches found</h2>
+  </div>
+</div>
+
     <div id="matches-container">
-        <!-- Content will be loaded here with JavaScript -->
+  
+        <div id="your-matches-content">
+            <div class="match-card">
+                <img src="https://via.placeholder.com/400x300" class="profile-image" alt="Profile picture">
+                <div class="profile-info">
+                    <h2 class="profile-name">Aisha Patel</h2>
+                    <p class="matched-on">Matched on <a href="#" class="match-tag">Number Theory</a></p>
+                    <p class="profile-description">
+                        Professor of Mathematics specializing in combinatorics and graph theory. I'm passionate about 
+                        mathematical education and making mathematics accessible to underprivileged communities.
+                    </p>
+                    <p class="interests-title">All Interests:</p>
+                    <div class="interest-tags">
+                        <span class="interest-tag">Combinatorics</span>
+                        <span class="interest-tag">Graph Theory</span>
+                        <span class="interest-tag active">Number Theory</span>
+                    </div>
+                    {{-- <div class="match-footer">
+                        <div class="date">Apr 12, 2023</div>
+                        <div class="message-count">
+                            <span class="message-icon">💬</span> 2 messages
+                        </div>
+                        <a href="/chat">
+                            <button class="chat-now-btn">
+                                <span class="chat-icon">💬</span> Chat Now
+                            </button>
+                        </a>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Potential Matches Content (Empty State) -->
+        {{-- <div id="potential-matches-content"  style="display: none;">
+            <div class="match-card-empty">
+                <div class="profile-icon">👤</div>
+                <h2 class="empty-message">No potential matches found</h2>
+                <p class="empty-description">
+                    Try adjusting your filter criteria or add more interests to your profile
+                </p>
+            </div>
+        </div> --}}
+        
+
+        <div id="no-matches-content" style="display: none;">
+            <div class="match-card-empty">
+                <div class="profile-icon">🔍</div>
+                <h2 class="empty-message">No matches found</h2>
+                <p class="empty-description">
+                    Try adjusting your filter criteria or search terms
+                </p>
+            </div>
+        </div>
     </div>
 </main>
 @endsection
@@ -37,436 +142,205 @@
 @section('script-section')
     <script>
     document.addEventListener("DOMContentLoaded", function () {
-  const potentialTab = document.getElementById('potential-tab');
-  const yourTab = document.getElementById('your-tab');
-  const searchInput = document.getElementById('search-input');
-  const matchesContainer = document.getElementById('matches-container');
-  const filterBtn = document.querySelector('.filter-btn');
-
-  // Initially set the potential tab as active and load its content
-  let activeTab = 'potential';
-  potentialTab.classList.add('active');
-  loadContent(activeTab);
-
-  // Create filter dropdown
-  const filterDropdown = document.createElement("div");
-  filterDropdown.className = "filter-dropdown";
-  filterDropdown.style.display = "none";
-
-  // Math interests
-  const interests = [
-    "Number Theory",
-    "Abstract Algebra",
-    "Calculus",
-    "Real Analysis",
-    "Complex Analysis",
-    "Topology",
-    "Differential Geometry",
-    "Linear Algebra",
-    "Combinatorics",
-    "Graph Theory",
-    "Probability Theory",
-    "Statistics",
-    "Mathematical Physics",
-    "Algebraic Geometry",
-    "Cryptography",
-    "Mathematical Biology",
-    "Data Science",
-    "Numerical Analysis",
-    "Optimization",
-    "Machine Learning",
-  ];
-
-  // Create header
-  const header = document.createElement("h3");
-  header.textContent = "Math Interests";
-  header.style.marginTop = "0";
-  header.style.marginBottom = "15px";
-  header.style.fontSize = "18px";
-  filterDropdown.appendChild(header);
-
-  // Create clear filter button
-  const clearBtn = document.createElement("button");
-  clearBtn.textContent = "Clear Filter";
-  clearBtn.className = "clear-filter-btn";
-  clearBtn.style.backgroundColor = "#f5f5f5";
-  clearBtn.style.border = "1px solid #ddd";
-  clearBtn.style.padding = "8px 15px";
-  clearBtn.style.borderRadius = "20px";
-  clearBtn.style.cursor = "pointer";
-  clearBtn.style.fontSize = "14px";
-  clearBtn.style.marginBottom = "15px";
-  clearBtn.style.fontWeight = "normal";
-  clearBtn.style.color = "#333";
-  filterDropdown.appendChild(clearBtn);
-
-  // Container for interest pills
-  const interestsContainer = document.createElement("div");
-  interestsContainer.style.display = "flex";
-  interestsContainer.style.flexWrap = "wrap";
-  interestsContainer.style.gap = "10px";
-  interestsContainer.style.maxHeight = "300px";
-  interestsContainer.style.overflowY = "auto";
-  interestsContainer.style.paddingRight = "5px";
-
-  // Add interest pills
-  interests.forEach((interest) => {
-    const interestPill = document.createElement("div");
-    interestPill.className = "interest-pill";
-    interestPill.textContent = interest;
-    interestPill.dataset.interest = interest;
-    interestPill.style.padding = "8px 15px";
-    interestPill.style.backgroundColor = "#f5f5f5";
-    interestPill.style.borderRadius = "20px";
-    interestPill.style.cursor = "pointer";
-    interestPill.style.transition = "all 0.2s";
-    interestPill.style.fontSize = "14px";
-    
-    interestPill.addEventListener("click", function() {
-      this.classList.toggle("active");
-      
-      if (this.classList.contains("active")) {
-        this.style.backgroundColor = "#e6f4ff";
-        this.style.color = "#1677ff";
-        this.style.border = "1px solid #1677ff";
-      } else {
-        this.style.backgroundColor = "#f5f5f5";
-        this.style.color = "#333";
-        this.style.border = "1px solid transparent";
-      }
-      
-      updateFilterDisplay();
-      
-      // Always reload content before filtering to ensure we have the base content
-      if (activeTab === 'your') {
-        loadYourMatchesContent();
-      }
-      
-      filterMatches();
-    });
-    
-    interestsContainer.appendChild(interestPill);
-  });
-
-  filterDropdown.appendChild(interestsContainer);
-
-  // Add the dropdown to the DOM
-  filterDropdown.style.position = "absolute";
-  filterDropdown.style.top = "40px";
-  filterDropdown.style.right = "0";
-  filterDropdown.style.backgroundColor = "white";
-  filterDropdown.style.border = "1px solid #ddd";
-  filterDropdown.style.borderRadius = "8px";
-  filterDropdown.style.padding = "15px";
-  filterDropdown.style.minWidth = "300px";
-  filterDropdown.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
-  filterDropdown.style.zIndex = "100";
-  
-  // Add dropdown arrow indicator
-  const dropdownArrow = document.createElement("div");
-  dropdownArrow.style.position = "absolute";
-  dropdownArrow.style.top = "-8px";
-  dropdownArrow.style.right = "15px";
-  dropdownArrow.style.width = "16px";
-  dropdownArrow.style.height = "16px";
-  dropdownArrow.style.backgroundColor = "white";
-  dropdownArrow.style.transform = "rotate(45deg)";
-  dropdownArrow.style.borderTop = "1px solid #ddd";
-  dropdownArrow.style.borderLeft = "1px solid #ddd";
-  dropdownArrow.style.zIndex = "-1"; // Place behind the dropdown content
-  filterDropdown.appendChild(dropdownArrow);
-  
-  // Make sure to append to the parent with proper positioning
-  const searchFilter = document.querySelector(".search-filter");
-  searchFilter.style.position = "relative";
-  searchFilter.appendChild(filterDropdown);
-
-  // Toggle filter dropdown when clicking the filter button
-  filterBtn.addEventListener("click", function (e) {
-    e.stopPropagation();
-    const isVisible = filterDropdown.style.display === "block";
-    filterDropdown.style.display = isVisible ? "none" : "block";
-    
-    // Position the dropdown relative to the button
-    if (!isVisible) {
-      const btnRect = filterBtn.getBoundingClientRect();
-      filterDropdown.style.top = (btnRect.bottom + window.scrollY - searchFilter.getBoundingClientRect().top) + "px";
-      filterDropdown.style.right = "0";
-    }
-  });
-
-  // Clear filter button functionality
-  clearBtn.addEventListener("click", function(e) {
-    e.stopPropagation(); // Prevent dropdown from closing
-    
-    const activePills = document.querySelectorAll(".interest-pill.active");
-    activePills.forEach(pill => {
-      pill.classList.remove("active");
-      pill.style.backgroundColor = "#f5f5f5";
-      pill.style.color = "#333";
-      pill.style.border = "1px solid transparent";
-    });
-    
-    updateFilterDisplay();
-    
-    // Always reload content when clearing filters
-    loadContent(activeTab);
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener("click", function (event) {
-    if (!filterDropdown.contains(event.target) && event.target !== filterBtn) {
-      filterDropdown.style.display = "none";
-    }
-  });
-
-  // Function to update filter button text
-  function updateFilterDisplay() {
-    const selectedInterests = document.querySelectorAll(".interest-pill.active");
-    const activeFilters = selectedInterests.length > 0;
-    
-    if (activeFilters) {
-      filterBtn.innerHTML = `
-        <span class="filter-icon">≡</span> Filters (${selectedInterests.length})
-      `;
-      filterBtn.style.backgroundColor = "#1677ff";
-      filterBtn.style.color = "white";
-    } else {
-      filterBtn.innerHTML = `
-        <span class="filter-icon">≡</span> Filter by Interest
-      `;
-      filterBtn.style.backgroundColor = "";
-      filterBtn.style.color = "";
-    }
-  }
-  
-  // Function to load only "Your Matches" content
-  function loadYourMatchesContent() {
-    matchesContainer.innerHTML = `
-      <div class="match-card">
-        <img src="https://via.placeholder.com/400x300" class="profile-image" alt="Profile picture">
-        <div class="profile-info">
-          <h2 class="profile-name">Aisha Patel</h2>
-          <p class="matched-on">Matched on <a href="#" class="match-tag">Number Theory</a></p>
-          <p class="profile-description">
-            Professor of Mathematics specializing in combinatorics and graph theory. I'm passionate about 
-            mathematical education and making mathematics accessible to underprivileged communities.
-          </p>
-          <p class="interests-title">All Interests:</p>
-          <div class="interest-tags">
-            <span class="interest-tag">Combinatorics</span>
-            <span class="interest-tag">Graph Theory</span>
-            <span class="interest-tag active">Number Theory</span>
-          </div>
-          <div class="match-footer">
-            <div class="date">Apr 12, 2023</div>
-            <div class="message-count">
-              <span class="message-icon">💬</span> 2 messages
-            </div>
-            <a href="/chat">
-            <button class="chat-now-btn">
-              <span class="chat-icon">💬</span> Chat Now
-            </button>
-            </a>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  // Function to filter matches based on selected interests
-  function filterMatches() {
+        // DOM Elements
+        const potentialTab = document.getElementById('potential-tab');
+        const yourTab = document.getElementById('your-tab');
+        const searchInput = document.getElementById('search-input');
+        const filterBtn = document.getElementById('filter-btn');
+        const filterDropdown = document.getElementById('filter-dropdown');
+        const clearFilterBtn = document.getElementById('clear-filter-btn');
+        const interestPills = document.querySelectorAll('.interest-pill');
+        const yourMatchesContent = document.getElementById('your-matches-content');
+        const potentialMatchesContent = document.getElementById('potential-matches-content');
+        const noMatchesContent = document.getElementById('no-matches-content');
+        
+        // Track active tab
+        let activeTab = 'your';
+        
+        // Tab switching
+        potentialTab.addEventListener('click', function() {
+            if (activeTab !== 'potential') {
+                activeTab = 'potential';
+                potentialTab.classList.add('active');
+                yourTab.classList.remove('active');
+                
+                // Show potential matches content
+                potentialMatchesContent.style.display = 'block';
+                yourMatchesContent.style.display = 'none';
+                noMatchesContent.style.display = 'none';
+                
+                // Reset search and filters
+                searchInput.value = '';
+                clearFilters();
+            }
+        });
+        
+        yourTab.addEventListener('click', function() {
+            if (activeTab !== 'your') {
+                activeTab = 'your';
+                yourTab.classList.add('active');
+                potentialTab.classList.remove('active');
+                
+                // Show your matches content
+                yourMatchesContent.style.display = 'block';
+                potentialMatchesContent.style.display = 'none';
+                noMatchesContent.style.display = 'none';
+                
+                // Reset search and filters
+                searchInput.value = '';
+                clearFilters();
+            }
+        });
+        
+        // Filter dropdown toggle
+        filterBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            filterDropdown.style.display = filterDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!filterDropdown.contains(e.target) && e.target !== filterBtn) {
+                filterDropdown.style.display = 'none';
+            }
+        });
+        
+        // Interest pill selection
+        interestPills.forEach(pill => {
+            pill.addEventListener('click', function() {
+                this.classList.toggle('active');
+                
+                if (this.classList.contains('active')) {
+                    this.style.backgroundColor = '#e6f4ff';
+                    this.style.color = '#1677ff';
+                    this.style.border = '1px solid #1677ff';
+                } else {
+                    this.style.backgroundColor = '#f5f5f5';
+                    this.style.color = '#333';
+                    this.style.border = '1px solid transparent';
+                }
+                
+                updateFilterDisplay();
+                filterMatches();
+            });
+        });
+        
+        // Clear filters
+        clearFilterBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearFilters();
+        });
+        
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            filterMatches();
+        });
+        
+        // Function to update filter button text
+        function updateFilterDisplay() {
+            const selectedInterests = document.querySelectorAll('.interest-pill.active');
+            const activeFilters = selectedInterests.length > 0;
+            
+            if (activeFilters) {
+                filterBtn.innerHTML = `<span class="filter-icon">≡</span> Filters (${selectedInterests.length})`;
+                filterBtn.style.backgroundColor = '#1677ff';
+                filterBtn.style.color = 'white';
+            } else {
+                filterBtn.innerHTML = `<span class="filter-icon">≡</span> Filter by Interest`;
+                filterBtn.style.backgroundColor = '';
+                filterBtn.style.color = '';
+            }
+        }
+        
+        // Function to clear all filters
+        function clearFilters() {
+            const activePills = document.querySelectorAll('.interest-pill.active');
+            activePills.forEach(pill => {
+                pill.classList.remove('active');
+                pill.style.backgroundColor = '#f5f5f5';
+                pill.style.color = '#333';
+                pill.style.border = '1px solid transparent';
+            });
+            
+            updateFilterDisplay();
+            filterMatches();
+        }
+        
+        // Function to filter matches based on search and selected interests
+        // Function to filter matches based on search and selected interests
+function filterMatches() {
+    const searchTerm = searchInput.value.toLowerCase();
     const selectedInterests = Array.from(
-      document.querySelectorAll(".interest-pill.active")
-    ).map((pill) => pill.dataset.interest);
-
-    const allCards = document.querySelectorAll(".match-card");
-    const activeFilters = selectedInterests.length > 0;
+        document.querySelectorAll('.interest-pill.active')
+    ).map(pill => pill.dataset.interest);
     
-    let visibleCardsCount = 0;
-
-    if (allCards.length === 0 && activeTab === 'potential') {
-      // No cards to filter in potential tab - return early
-      return;
-    }
-
-    allCards.forEach((card) => {
-      if (!activeFilters) {
-        card.style.display = "flex";
-        visibleCardsCount++;
-        return;
-      }
-
-      const cardInterests = Array.from(
-        card.querySelectorAll(".interest-tag")
-      ).map((tag) => tag.textContent);
-
-      const hasMatchingInterest = selectedInterests.some((interest) =>
-        cardInterests.includes(interest)
-      );
-
-      card.style.display = hasMatchingInterest ? "flex" : "none";
-      if (hasMatchingInterest) visibleCardsCount++;
-    });
+    // Get the appropriate content container based on active tab
+    const contentContainer = activeTab === 'your' ? yourMatchesContent : potentialMatchesContent;
+    const emptyStateElement = activeTab === 'your' ? noMatchesContent : 
+                                document.getElementById('potential-empty-state');
     
-    // Show empty state if no matches found
-    showNoMatchesMessage(visibleCardsCount === 0 && activeTab === 'your');
-  }
-
-  // Function to show/hide the no matches message
-  function showNoMatchesMessage(show) {
-    if (show) {
-      matchesContainer.innerHTML = `
-        <div class="match-card-empty">
-          <div class="profile-icon">🔍</div>
-          <h2 class="empty-message">No matches found</h2>
-          <p class="empty-description">
-            Try adjusting your filter criteria or search terms
-          </p>
-        </div>
-      `;
-    }
-  }
-
-  // Function to load the appropriate content based on the active tab
-  function loadContent(tab) {
-    if (tab === 'your') {
-      // Display the "Your Matches" content
-      loadYourMatchesContent();
-      searchInput.placeholder = "Search matches...";
-    } else {
-      // Display the "Potential Matches" content (empty state)
-      matchesContainer.innerHTML = `
-        <div class="match-card-empty">
-          <div class="profile-icon">👤</div>
-          <h2 class="empty-message">No potential matches found</h2>
-          <p class="empty-description">
-            Try adjusting your filter criteria or add more interests to your profile
-          </p>
-        </div>
-      `;
-      searchInput.placeholder = "Search potential matches...";
-    }
-    
-    // After loading content, apply any active filters
-    filterMatches();
-  }
-
-  // Search functionality
-  searchInput.addEventListener("input", function() {
-    // Always reload content before applying search to ensure we have the base content
-    if (activeTab === 'your') {
-      loadYourMatchesContent();
-    }
-    
-    const searchTerm = this.value.toLowerCase();
-    const allCards = document.querySelectorAll(".match-card");
-    
-    if (allCards.length === 0) {
-      // No cards to search through - return early
-      return;
-    }
+    // Select all cards in the active container
+    const allCards = activeTab === 'your' ? 
+                     contentContainer.querySelectorAll('.match-card') : 
+                     contentContainer.querySelectorAll('.mathematician-card');
     
     let visibleCardsCount = 0;
     
     allCards.forEach(card => {
-      const name = card.querySelector(".profile-name").textContent.toLowerCase();
-      const description = card.querySelector(".profile-description").textContent.toLowerCase();
-      const interests = Array.from(card.querySelectorAll(".interest-tag"))
-        .map(tag => tag.textContent.toLowerCase());
-      
-      const matchesSearch = 
-        name.includes(searchTerm) || 
-        description.includes(searchTerm) ||
-        interests.some(interest => interest.includes(searchTerm));
-      
-      card.style.display = matchesSearch ? "flex" : "none";
-      if (matchesSearch) visibleCardsCount++;
+        const name = card.querySelector(activeTab === 'your' ? '.profile-name' : '.mathematician-name')
+                       .textContent.toLowerCase();
+        const description = card.querySelector(activeTab === 'your' ? '.profile-description' : '.mathematician-bio')
+                             .textContent.toLowerCase();
+        const interests = Array.from(card.querySelectorAll('.interest-tag'))
+                           .map(tag => tag.textContent.toLowerCase());
+        
+        // Check if card matches search
+        const matchesSearch = searchTerm === '' || 
+            name.includes(searchTerm) || 
+            description.includes(searchTerm) ||
+            interests.some(interest => interest.includes(searchTerm));
+        
+        // Check if card matches selected interests
+        const hasMatchingInterest = selectedInterests.length === 0 || 
+            selectedInterests.some(interest => 
+                interests.includes(interest.toLowerCase()));
+        
+        // Show card only if it matches both search and filters
+        card.style.display = (matchesSearch && hasMatchingInterest) ? 'flex' : 'none';
+        
+        if (matchesSearch && hasMatchingInterest) {
+            visibleCardsCount++;
+        }
     });
     
-    // Show empty state if no matches found
-    showNoMatchesMessage(visibleCardsCount === 0 && activeTab === 'your');
-    
-    // Apply any active filters after search
-    filterMatches();
-  });
-
-  // Event listeners for tab switching
-  potentialTab.addEventListener('click', () => {
-    if (activeTab !== 'potential') {
-      activeTab = 'potential';
-      potentialTab.classList.add('active');
-      yourTab.classList.remove('active');
-      loadContent(activeTab);
-      
-      // Clear search and filters when switching tabs
-      searchInput.value = '';
-      const activePills = document.querySelectorAll(".interest-pill.active");
-      activePills.forEach(pill => {
-        pill.classList.remove("active");
-        pill.style.backgroundColor = "#f5f5f5";
-        pill.style.color = "#333";
-        pill.style.border = "1px solid transparent";
-      });
-      updateFilterDisplay();
+    // Show empty state if needed
+    if (visibleCardsCount === 0) {
+        contentContainer.style.display = 'block';
+        
+        // Show the appropriate empty state
+        if (activeTab === 'your') {
+            noMatchesContent.style.display = 'block';
+            yourMatchesContent.style.display = 'none';
+        } else {
+            // For potential matches tab
+            document.getElementById('potential-empty-state').style.display = 'block';
+            
+            // Hide any cards in potential matches
+            contentContainer.querySelectorAll('.mathematician-card').forEach(card => {
+                card.style.display = 'none';
+            });
+        }
+    } else {
+        // Show content and hide empty state
+        contentContainer.style.display = 'block';
+        
+        if (activeTab === 'your') {
+            noMatchesContent.style.display = 'none';
+        } else {
+            document.getElementById('potential-empty-state').style.display = 'none';
+        }
     }
-  });
-
-  yourTab.addEventListener('click', () => {
-    if (activeTab !== 'your') {
-      activeTab = 'your';
-      yourTab.classList.add('active');
-      potentialTab.classList.remove('active');
-      loadContent(activeTab);
-      
-      // Clear search and filters when switching tabs
-      searchInput.value = '';
-      const activePills = document.querySelectorAll(".interest-pill.active");
-      activePills.forEach(pill => {
-        pill.classList.remove("active");
-        pill.style.backgroundColor = "#f5f5f5";
-        pill.style.color = "#333";
-        pill.style.border = "1px solid transparent";
-      });
-      updateFilterDisplay();
-    }
-  });
-
-  // Add responsive styles
-  const style = document.createElement("style");
-  style.textContent = `
-    .filter-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    
-    .filter-dropdown {
-      min-width: 280px;
-    }
-    
-    .interest-pill {
-      border: 1px solid transparent;
-    }
-    
-    .interest-pill.active {
-      background-color: #e6f4ff !important;
-      color: #1677ff !important;
-      border: 1px solid #1677ff !important;
-    }
-    
-    @media (max-width: 768px) {
-      .filter-dropdown {
-        width: calc(100% - 30px);
-        right: 15px !important;
-        left: 15px;
-        margin: 0 auto;
-      }
-    }
-  `;
-  document.head.appendChild(style);
-});
+}
+    });
     </script>
 @endsection

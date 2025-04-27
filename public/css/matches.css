@@ -294,3 +294,341 @@ body {
         align-self: flex-end;
     }
 }
+
+.mathematician-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: row;
+}
+
+.mathematician-photo {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.mathematician-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mathematician-name {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #1f1f1f;
+}
+
+.mathematician-bio {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.interests-label {
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.interests-tags {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.interest-tag {
+    background-color: #f0f0f0;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.connect-btn {
+    align-self: flex-end;
+    margin-top: auto;
+    background-color: #1677ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .mathematician-photo {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+   
+    .mathematician-card {
+        flex-direction: column;
+    }
+
+    .mathematician-photo {
+        width: 100%;
+        height: auto;
+        max-height: 350px;
+    }
+
+    .connect-btn {
+        align-self: stretch;
+        width: 100%;
+        justify-content: center;
+    }
+}
+     /* Match Cards */
+     .match-card {
+        display: flex;
+        background-color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+    }
+    
+    .profile-image {
+        width: 200px;
+        height: auto;
+        object-fit: cover;
+    }
+    
+    .profile-info {
+        flex: 1;
+        padding: 20px;
+    }
+    
+    .profile-name {
+        margin: 0 0 5px 0;
+        font-size: 20px;
+    }
+    
+    .matched-on {
+        color: #666;
+        margin-top: 0;
+        font-size: 14px;
+    }
+    
+    .match-tag {
+        color: #1677ff;
+        text-decoration: none;
+    }
+    
+    .profile-description {
+        line-height: 1.5;
+        margin: 15px 0;
+        color: #444;
+    }
+    
+    .interests-title {
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    
+    .interest-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+    
+    .interest-tag {
+        background-color: #f5f5f5;
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 12px;
+        color: #666;
+    }
+    
+    .interest-tag.active {
+        background-color: #e6f4ff;
+        color: #1677ff;
+    }
+    
+    .match-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #f0f0f0;
+    }
+    
+    .date {
+        color: #999;
+        font-size: 14px;
+    }
+    
+    .message-count {
+        color: #666;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .message-icon {
+        margin-right: 5px;
+    }
+    
+    .chat-now-btn {
+        background-color: #1677ff;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+    
+    .chat-now-btn:hover {
+        background-color: #0e5ecf;
+    }
+    
+    /* Empty State */
+    .match-card-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: 12px;
+        padding: 40px 20px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .profile-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #ccc;
+    }
+    
+    .empty-message {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        color: #666;
+    }
+    
+    .empty-description {
+        color: #999;
+        max-width: 300px;
+        margin: 0;
+    }
+    
+    /* Filter Dropdown */
+/* Filter Dropdown */
+.filter-dropdown {
+position: absolute;
+top: 100%;  /* Position it below the parent element */
+right: 0;
+background-color: white;
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 15px;
+min-width: 300px;
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+z-index: 100;
+display: none;
+margin-top: 10px; /* Add some space between button and dropdown */
+}
+
+/* Make sure the container for the filter button has position: relative */
+.search-filter {
+position: relative;
+}
+    
+    .dropdown-arrow {
+        position: absolute;
+        top: -8px;
+        right: 15px;
+        width: 16px;
+        height: 16px;
+        background-color: white;
+        transform: rotate(45deg);
+        border-top: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        z-index: -1;
+    }
+    
+    .interest-pill {
+        padding: 8px 15px;
+        background-color: #f5f5f5;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+        border: 1px solid transparent;
+    }
+    
+    .interest-pill.active {
+        background-color: #e6f4ff !important;
+        color: #1677ff !important;
+        border: 1px solid #1677ff !important;
+    }
+    
+    .clear-filter-btn {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-bottom: 15px;
+        font-weight: normal;
+        color: #333;
+    }
+    
+    .interests-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .match-card {
+            flex-direction: column;
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 200px;
+        }
+        
+        .filter-dropdown {
+            width: calc(100% - 30px);
+            right: 15px;
+            left: 15px;
+            margin: 0 auto;
+        }
+        
+        .search-filter {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .search-bar {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+    }
