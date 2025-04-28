@@ -28,8 +28,10 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Profile Created</th>
                                 <th>Registered At </th>
                                 <th>Email Verified At</th>
+
                 
                             </tr>
                         </thead>
@@ -43,6 +45,7 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->profile ? "Yes" : "No" }}</td>
                                 <td>{{ $user->created_at->format('d M, Y ') }}</td>
                                 <td>{{ $user->email_verified_at?->format('d M, Y') ?? "Not Verified"   }}</td>
         
