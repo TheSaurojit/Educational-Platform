@@ -9,7 +9,21 @@ use Illuminate\Support\Facades\Auth;
 
 class MatchController extends Controller
 {
- 
+    
+
+    public function  discoverView()
+    {
+        $mathematicians = User::where('id', '!=', Auth::id())
+            ->whereHas('profile', function ($query) {
+                $query->where('is_mathematician', true);
+            })
+            ->with('profile')
+            ->get();
+
+
+        return view('pages.discover', compact('mathematicians'));
+    }
+
 
     public function matchView()
     {
@@ -19,34 +33,42 @@ class MatchController extends Controller
             ->get();
 
 
-        return view('pages.matches',compact('users'));
+        return view('pages.matches', compact('users'));
     }
 
-    // Send friend request
-    public function sendRequest($receiverId)
+    public function sendRequest(Request $request)
     {
-        Friendship::create([
-            'sender_id' => Auth::id(),
-            'receiver_id' => $receiverId,
-            'status' => 'pending'
+        $friendship = Friendship::create([
+            'user_id' => auth()->id(),
+            'friend_id' => $request->friend_id,
+            'status' => 'pending',
         ]);
+
+        return response()->json(['message' => 'Friend request sent!']);
     }
 
-    // Accept request
-    public function acceptRequest($requestId)
+    public function acceptRequest($id)
     {
-        $request = Friendship::findOrFail($requestId);
-        if ($request->receiver_id === Auth::id()) {
-            $request->update(['status' => 'accepted']);
-        }
+        $friendship = Friendship::find($id);
+        $friendship->status = 'accepted';
+        $friendship->save();
+
+        return response()->json(['message' => 'Friend request accepted!']);
     }
 
-    // Decline request
-    public function declineRequest($requestId)
+    public function rejectRequest($id)
     {
-        $request = Friendship::findOrFail($requestId);
-        if ($request->receiver_id === Auth::id()) {
-            $request->update(['status' => 'declined']);
-        }
+        $friendship = Friendship::find($id);
+        $friendship->status = 'rejected';
+        $friendship->save();
+
+        return response()->json(['message' => 'Friend request rejected!']);
+    }
+
+    public function listFriends()
+    {
+        $friends = auth()->user()->friends()->wherePivot('status', 'accepted')->get();
+
+        return response()->json($friends);
     }
 }
