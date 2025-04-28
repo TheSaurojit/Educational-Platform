@@ -13,14 +13,6 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="/admin/assets/images/favicon.ico">
 
-    <!-- DataTables -->
-    <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
-        type="text/css" />
-
-    <!-- Responsive datatable examples -->
-    <link href="/admin/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-        type="text/css" />
 
 
     <!-- Bootstrap Css -->
@@ -31,6 +23,18 @@
     <link href="/admin/assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <!-- App js -->
     <script src="/admin/assets/js/plugin.js"></script>
+
+
+    <!-- DataTables -->
+    <link href="/admin/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="/admin/assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="/admin/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+
 
     @yield('head-section')
 
@@ -133,9 +137,14 @@
 
                 <div class="d-flex">
 
+
+
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle header-profile-user"
+                                src="https://www.shutterstock.com/image-vector/user-account-avatar-icon-pictogram-600nw-1860375778.jpg"
+                                alt="Header Avatar">
 
                             <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ Auth::user()->email }}</span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
@@ -368,9 +377,6 @@
     <!-- END layout-wrapper -->
 
 
-
-
-
     <!-- JAVASCRIPT -->
 
     <script src="/admin/assets/libs/jquery/jquery.min.js"></script>
@@ -392,6 +398,11 @@
     <script src="/admin/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
     <script src="/admin/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
     <script src="/admin/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <!-- Responsive examples -->
+    <script src="/admin/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/admin/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
 
     <!-- Datatable init js -->
