@@ -57,9 +57,7 @@
 
             <div class="form-group">
                 <label for="address">Address</label>
-                <textarea id="address" name="address">
-                    {{ $data ? $data['address'] : '' }} 
-                </textarea>
+                <textarea id="address" name="address">{{ $data ? $data['address'] : '' }}</textarea>
             </div>
 
             <div class="form-group">
@@ -83,11 +81,7 @@
             <div class="form-group">
                 <label for="achievements">Achievements</label>
                 <textarea id="achievements" name="achievements"
-                    placeholder="List any mathematical achievements, competitions, or awards">
-                
-                    {{ $data ? $data['achievements'] : '' }} 
-
-                </textarea>
+                    placeholder="List any mathematical achievements, competitions, or awards">{{ $data ? $data['achievements'] : '' }}</textarea>
             </div>
 
             <div class="form-group">
