@@ -50,24 +50,6 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
 // Friend Request Routes
-Route::middleware('isUser')->group(function () {
-
-
-    Route::controller(MatchController::class)->as('friend.')->group(function () {
-
-        Route::post('/send-request/{receiverId}', 'sendRequest')->name('send');
-        Route::post('/accept-request/{senderId}', 'acceptRequest')->name('accept');
-        Route::post('/reject-request/{senderId}', 'rejectRequest')->name('reject');
-
-
-        
-    });
-    Route::get('/notifications',  [MatchController::class,'notifications'])->name('notifications');
-    
-
-    // Route::get('/friends', [MatchController::class, 'friendsList'])->name('friend.list');
-    // Route::get('/pending-requests', [MatchController::class, 'pendingRequests'])->name('friend.pending');
-});
 
 Route::middleware('isUser')->group(function () {
 
@@ -76,6 +58,14 @@ Route::middleware('isUser')->group(function () {
     //     Route::post('/posts/{post}/unlike', 'unlike')->name('unlike');
     //     Route::post('/posts/{post}/comment', 'comment')->name('comment');
     // });
+
+    Route::controller(MatchController::class)->as('friend.')->group(function () {
+
+        Route::post('/send-request/{receiverId}', 'sendRequest')->name('send');
+        Route::post('/accept-request/{senderId}', 'acceptRequest')->name('accept');
+        Route::post('/reject-request/{senderId}', 'rejectRequest')->name('reject');
+    });
+    Route::get('/notifications',  [MatchController::class, 'notifications'])->name('notifications');
 
 
     Route::controller(MatchController::class)->group(function () {
