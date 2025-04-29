@@ -64,20 +64,15 @@ class User extends Authenticatable
     // Requests I sent
     public function sentFriendRequests()
     {
-        return $this->hasMany(Friendship::class, 'sender_id');
+        return $this->hasMany(Friendship::class, 'sender_id')
+            ->where('status', 'pending');
     }
 
     // Requests I received
     public function receivedFriendRequests()
     {
-        return $this->hasMany(Friendship::class, 'receiver_id');
+        return $this->hasMany(Friendship::class, 'receiver_id')
+            ->where('status', 'pending');
     }
 
-    // Accepted friends
-    public function friends()
-    {
-        return $this->belongsToMany(User::class, 'friendships', 'sender_id', 'receiver_id')
-            ->wherePivot('status', 'accepted')
-            ->withTimestamps();
-    }
 }

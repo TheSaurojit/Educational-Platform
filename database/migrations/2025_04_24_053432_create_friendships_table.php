@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('sender_id');
             $table->uuid('receiver_id');
         
-            $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending');
+            $table->enum('status', ['pending', 'accepted'])->default('pending');
             $table->timestamps();
         
             // Foreign key constraints

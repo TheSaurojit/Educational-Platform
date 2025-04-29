@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
+use App\Http\Controllers\PostInteractionController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -24,9 +25,6 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
 
 
-Route::get('/notifications', function () {
-    return view('pages.notifications');
-});
 
 
 Route::get('/profilepublic', function () {
@@ -40,8 +38,6 @@ Route::get('/chat', function () {
 });
 
 
-
-
 //user routes
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
@@ -53,7 +49,34 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 // ]))->name('home');
 
 
+// Friend Request Routes
 Route::middleware('isUser')->group(function () {
+
+
+    Route::controller(MatchController::class)->as('friend.')->group(function () {
+
+        Route::post('/send-request/{receiverId}', 'sendRequest')->name('send');
+        Route::post('/accept-request/{senderId}', 'acceptRequest')->name('accept');
+        Route::post('/reject-request/{senderId}', 'rejectRequest')->name('reject');
+
+
+        
+    });
+    Route::get('/notifications',  [MatchController::class,'notifications'])->name('notifications');
+    
+
+    // Route::get('/friends', [MatchController::class, 'friendsList'])->name('friend.list');
+    // Route::get('/pending-requests', [MatchController::class, 'pendingRequests'])->name('friend.pending');
+});
+
+Route::middleware('isUser')->group(function () {
+
+    Route::controller(PostInteractionController::class)->as('posts.')->group(function () {
+        Route::post('/posts/{post}/like', 'like')->name('like');
+        Route::post('/posts/{post}/unlike', 'unlike')->name('unlike');
+        Route::post('/posts/{post}/comment', 'comment')->name('comment');
+    });
+
 
     Route::controller(MatchController::class)->group(function () {
 

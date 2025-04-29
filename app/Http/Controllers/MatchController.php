@@ -4,16 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Friendship;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class MatchController extends Controller
 {
-    
+    public function getUserIdsThatArePendingOrAccepted(): array
+    {
+        $userId = Auth::id();
 
-    public function  discoverView()
+        $sent = Friendship::where('sender_id', $userId)->pluck('receiver_id')->toArray();
+        $received = Friendship::where('receiver_id', $userId)->pluck('sender_id')->toArray();
+
+        $connectedIds = array_unique(array_merge($sent, $received));
+
+        return $connectedIds;
+    }
+
+    public function  discoverView(): View
     {
         $mathematicians = User::where('id', '!=', Auth::id())
+            ->whereNotIn('id', $this->getUserIdsThatArePendingOrAccepted())
             ->whereHas('profile', function ($query) {
                 $query->where('is_mathematician', true);
             })
@@ -25,9 +39,10 @@ class MatchController extends Controller
     }
 
 
-    public function matchView()
+    public function matchView(): View
     {
         $users = User::where('id', '!=', Auth::id())
+            ->whereNotIn('id', $this->getUserIdsThatArePendingOrAccepted())
             ->whereHas('profile')
             ->with('profile')
             ->get();
@@ -36,39 +51,92 @@ class MatchController extends Controller
         return view('pages.matches', compact('users'));
     }
 
-    public function sendRequest(Request $request)
+    public function sendRequest($receiverId): RedirectResponse
     {
-        $friendship = Friendship::create([
-            'user_id' => auth()->id(),
-            'friend_id' => $request->friend_id,
-            'status' => 'pending',
-        ]);
+        $senderId = Auth::id();
 
-        return response()->json(['message' => 'Friend request sent!']);
+        // Prevent sending request to yourself
+        if ($senderId == $receiverId) {
+            return back()->withErrors(['error' => 'You cannot send a request to yourself']);
+        }
+
+        // Verify the receiver exists
+        $receiverExists = User::where('id', $receiverId)->exists();
+        if (!$receiverExists) {
+            return back()->withErrors(['error' => 'User not found']);
+        }
+
+        // Check if a friendship already exists (in either direction)
+        $exists = Friendship::where(function ($query) use ($senderId, $receiverId) {
+            $query->where('sender_id', $senderId)->where('receiver_id', $receiverId);
+        })->orWhere(function ($query) use ($senderId, $receiverId) {
+            $query->where('sender_id', $receiverId)->where('receiver_id', $senderId);
+        })->exists();
+
+        if ($exists) {
+            return back()->with(['success' => ' Match request  sent']);
+        }
+
+        try {
+            // Create new friendship request
+            Friendship::create([
+                'sender_id' => $senderId,
+                'receiver_id' => $receiverId,
+                'status' => 'pending',
+            ]);
+
+            return back()->with(['success' => 'Match request sent ']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Failed to send match request. Please try again.']);
+        }
     }
 
-    public function acceptRequest($id)
+    public function notifications(): View
     {
-        $friendship = Friendship::find($id);
-        $friendship->status = 'accepted';
-        $friendship->save();
+        /**
+         * @var User
+         */
+        $user = Auth::user();
+        $requests = $user->receivedFriendRequests()
+            ->with('sender.profile')
+            ->get();
 
-        return response()->json(['message' => 'Friend request accepted!']);
+
+        return view('pages.notifications', compact('requests'));
     }
 
-    public function rejectRequest($id)
+    public function acceptRequest($senderId): RedirectResponse
     {
-        $friendship = Friendship::find($id);
-        $friendship->status = 'rejected';
-        $friendship->save();
+        $receiverId = Auth::id();
 
-        return response()->json(['message' => 'Friend request rejected!']);
+        $friendship = Friendship::where('sender_id', $senderId)
+            ->where('receiver_id', $receiverId)
+            ->where('status', 'pending') // Optional but safer
+            ->first();
+
+        if (!$friendship) {
+            return back();
+        }
+
+        $friendship->update(['status' => 'accepted']);
+
+        return back()->with(['success' => 'Match request accepted!']);
     }
 
-    public function listFriends()
+    public function rejectRequest($senderId): RedirectResponse
     {
-        $friends = auth()->user()->friends()->wherePivot('status', 'accepted')->get();
+        $receiverId = Auth::id();
 
-        return response()->json($friends);
+        $friendship = Friendship::where('sender_id', $senderId)
+            ->where('receiver_id', $receiverId)
+            ->where('status', 'pending') // Optional but safer
+            ->first();
+
+        if (!$friendship) {
+            return back();
+        }
+        $friendship->delete();
+
+        return back()->with(['success' => 'Friend request rejected!']);
     }
 }

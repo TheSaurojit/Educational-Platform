@@ -49,6 +49,7 @@
 
         @foreach ($mathematicians as $user)
             @php
+                $userId = $user->id ;
                 $image = $user->profile->profile_image;
                 $name = $user->name;
                 $interests = $user->profile->mathematical_interests;
@@ -73,8 +74,20 @@
                         @endforeach
 
                     </div>
+                    
 
-                    <button class="connect-btn">
+                    <x-post-button url="{{ route('friend.send',['receiverId'=>$userId] ) }}" label="Send Request" class="connect-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                            <line x1="23" y1="11" x2="17" y2="11"></line>
+                        </svg>
+                    </x-post-button>
+
+                    {{-- <button class="connect-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -84,10 +97,12 @@
                             <line x1="23" y1="11" x2="17" y2="11"></line>
                         </svg>
                         Send Request
-                    </button>
+                    </button> --}}
                 </div>
             </div>
         @endforeach
+
+
 
 
         <div id="mathematician-list">
@@ -206,26 +221,7 @@
                 showNoMatchesMessage(visibleCardsCount === 0);
             });
 
-            // Add click event for send request buttons
-            const connectButtons = document.querySelectorAll(".connect-btn");
-            connectButtons.forEach((button) => {
-                button.addEventListener("click", function() {
-                    const name = this.closest(".mathematician-info").querySelector(
-                        ".mathematician-name"
-                    ).textContent;
-                    this.textContent = "Request Sent";
-                    this.innerHTML = `
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                  Request Sent
-              `;
-                    this.style.backgroundColor = "#52c41a";
-                    this.disabled = true;
-
-                    alert(`Connection request sent to ${name}!`);
-                });
-            });
+           
 
             // Get references to elements for filter
             const filterBtn = document.querySelector(".filter-btn");

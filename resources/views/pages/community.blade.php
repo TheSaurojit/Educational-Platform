@@ -59,29 +59,39 @@
                     </div>
                     <div class="post-stats">
                         <div class="post-stat">
-                            <svg class="post-stat-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"></path>
+                            <svg class="post-stat-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z">
+                                </path>
                                 <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
                             </svg>
-                            <span class="like-count">{{ $post->likes_count ?? 0 }}</span> likes
+                            <span class="like-count">{{ $post->likes->count()  }}</span> likes
                         </div>
                         <div class="post-stat">
-                            <svg class="post-stat-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="post-stat-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
-                            <span class="comment-count">{{ $post->comments_count ?? 0 }}</span> comments
+                            <span class="comment-count">{{ $post->comments->count()  }}</span> comments
                         </div>
                     </div>
                     <div class="post-actions">
                         <div class="post-action" data-action="like" onclick="toggleLike({{ $post->id }})">
-                            <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"></path>
+                            <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z">
+                                </path>
                                 <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
                             </svg>
                             Like
                         </div>
                         <div class="post-action" data-action="comment" onclick="toggleComments({{ $post->id }})">
-                            <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
                             Comment
@@ -157,7 +167,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Sample data structure kept from original code
-            const posts = [{
+
+
+
+            const posts = [
+                {
                     id: 1,
                     author: {
                         name: "ProfEuler42",
@@ -212,7 +226,7 @@
                 }
             ];
 
-            
+
 
             // Get modal elements
             const modal = document.getElementById('comment-modal');
@@ -282,20 +296,20 @@
                     // Clone comment template
                     const commentNode = commentTemplate.content.cloneNode(true);
                     const commentElement = commentNode.querySelector('.comment');
-                    
+
                     // Set comment data
                     commentElement.dataset.commentId = comment.id;
                     commentElement.querySelector('img').src = comment.author.profilePic;
                     commentElement.querySelector('img').alt = comment.author.name;
                     commentElement.querySelector('.comment-author-name').textContent = comment.author.name;
                     commentElement.querySelector('.comment-text').textContent = comment.text;
-                    
+
                     // Set up reply button
                     const replyButton = commentElement.querySelector('.reply-action');
                     replyButton.onclick = function() {
                         toggleReplyForm(comment.id);
                     };
-                    
+
                     // Add comment to DOM
                     commentsList.appendChild(commentElement);
 
@@ -325,35 +339,39 @@
                         // Clone reply template
                         const replyNode = replyTemplate.content.cloneNode(true);
                         const replyElement = replyNode.querySelector('.reply');
-                        
+
                         // Set reply data
                         replyElement.dataset.commentId = reply.id;
                         replyElement.dataset.parentId = reply.parentId;
                         replyElement.querySelector('img').src = reply.author.profilePic;
                         replyElement.querySelector('img').alt = reply.author.name;
-                        replyElement.querySelector('.comment-author-name').textContent = reply.author.name;
-                        replyElement.querySelector('.parent-author').textContent = findCommentAuthorName(comments, reply.parentId);
+                        replyElement.querySelector('.comment-author-name').textContent = reply
+                            .author.name;
+                        replyElement.querySelector('.parent-author').textContent =
+                            findCommentAuthorName(comments, reply.parentId);
                         replyElement.querySelector('.comment-text').textContent = reply.text;
-                        
+
                         // Set up reply button
                         const replyButton = replyElement.querySelector('.reply-action');
                         replyButton.onclick = function() {
                             toggleReplyForm(reply.id);
                         };
-                        
+
                         // Add reply to DOM
                         commentsList.appendChild(replyElement);
                     });
                 });
-                
+
                 // Set up reply forms
                 comments.forEach(comment => {
                     if (comment.isReplyFormVisible) {
-                        const commentElement = commentsList.querySelector(`[data-comment-id="${comment.id}"]`);
+                        const commentElement = commentsList.querySelector(
+                            `[data-comment-id="${comment.id}"]`);
                         if (commentElement) {
-                            const replyFormContainer = commentElement.querySelector('.reply-form-container');
+                            const replyFormContainer = commentElement.querySelector(
+                            '.reply-form-container');
                             replyFormContainer.style.display = 'block';
-                            
+
                             // Set up form submission
                             const replyForm = replyFormContainer.querySelector('.reply-form');
                             replyForm.onsubmit = function(event) {
@@ -385,13 +403,13 @@
                 if (post) {
                     // Set the current post ID as a data attribute
                     commentForm.dataset.postId = postId;
-                    
+
                     // Render comments using templates
                     renderComments(post.comments);
-                    
+
                     // Display modal
                     modal.style.display = 'flex';
-                    
+
                     // Set up submit event handler for adding comments
                     commentForm.onsubmit = function(event) {
                         event.preventDefault();
@@ -407,7 +425,7 @@
                     // Update like count
                     const likeCountElement = postElement.querySelector('.like-count');
                     likeCountElement.textContent = post.likes;
-                    
+
                     // Update like button
                     const likeButton = postElement.querySelector('.post-action[data-action="like"]');
                     if (post.isLiked) {
@@ -470,10 +488,10 @@
 
                             // Clear the input and refresh the view
                             replyInput.value = '';
-                            
+
                             // Update the UI
                             renderComments(post.comments);
-                            
+
                             // Update comment count in post
                             updateCommentCount(post);
                             return;
@@ -501,10 +519,10 @@
 
                         post.comments.push(newComment);
                         commentInput.value = '';
-                        
+
                         // Update the UI
                         renderComments(post.comments);
-                        
+
                         // Update comment count in post
                         updateCommentCount(post);
                     }

@@ -11,22 +11,30 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('communities', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->text('title')->nullable();
-            $table->longText('body')->nullable();
-            $table->longText('image')->nullable();
+
+
+            $table->longText('body');
 
             $table->uuid('user_id');
+            $table->uuid('post_id');
+
 
             //foreign
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+
+
 
             // Indexes for performance
             $table->index('user_id');
+            $table->index('post_id');
 
 
             $table->timestamps();
+            
+
         });
     }
 
@@ -35,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('communities');
+        Schema::dropIfExists('comments');
     }
 };
