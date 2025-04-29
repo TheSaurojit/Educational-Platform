@@ -169,7 +169,7 @@
         <div class="connections-card">
             <h2 class="connections-title">Looking for more connections?</h2>
             <p class="connections-subtitle">Explore potential matches based on your mathematical interests.</p>
-            <a href="#" class="explore-btn">Explore Matches</a>
+            <a href="{{ route('matches')}} " class="explore-btn">Explore Matches</a>
         </div>
     </div>
 @endsection

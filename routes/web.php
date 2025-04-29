@@ -25,14 +25,6 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
 
 
-
-
-Route::get('/profilepublic', function () {
-    return view('pages.profile_public');
-});
-
-
-
 Route::get('/chat', function () {
     return view('pages.chat');
 });
@@ -85,8 +77,12 @@ Route::middleware('isUser')->group(function () {
 
     Route::controller(ProfileController::class)->group(function () {
 
+        Route::get('/profile/{userId}',  'showOthersProfile')->name('others.profile')->middleware('hasProfile');
+
         Route::get('/profile',  'showProfile')->name('profile')->middleware('hasProfile');
+
         Route::get('/edit-profile',  'showProfileForm')->name('create-profile');
+
         Route::post('/edit-profile',  'create')->name('create-profile');
         Route::post('/update-profile',  'update')->name('update-profile');
     });

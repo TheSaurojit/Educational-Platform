@@ -10,12 +10,27 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    public function showOthersProfile(string $userId)
+    {
+        $user = User::where('id', $userId)->whereHas('profile')->firstOrFail();
+
+        $name = $user->name ;
+
+        $profile = $user->profile ;
+
+
+        return view('pages.profile_public',compact('profile','name')) ;
+
+    }
+
+
     public function showProfile()
     {
         $profile = Auth::user()->profile;
 
         return view('pages.profile', compact('profile'));
     }
+
     public function showProfileForm()
     {
         // $data = Profile::where('user_id', Auth::id())->first();
@@ -28,7 +43,7 @@ class ProfileController extends Controller
     public function create(Request $request)
     {
         $rules = [
-            'profile_image' => ['required', 'image', 'mimes:jpg,png,jpeg' , 'max:2048'],
+            'profile_image' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
             'is_mathematician' => ['required'],
             'mathematical_interests' => ['required', 'array', 'min:1', 'max:5'],
             'address' => ['nullable', 'string'],

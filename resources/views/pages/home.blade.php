@@ -81,6 +81,7 @@
             @foreach ($mathematicians as $user)
                 
                 @php
+                    $url = route('others.profile',['userId'=>$user->id]) ;
                     $image = $user->profile->profile_image;
                     $name = $user->name;
                     $interests = $user->profile->mathematical_interests;
@@ -124,7 +125,7 @@
                             </ul>
                         </div>
 
-                        <a href="#" class="view-profile-btn">View Profile</a>
+                        <a href="{{ $url }}" class="view-profile-btn">View Profile</a>
                     </div>
                 </div>
             @endforeach
