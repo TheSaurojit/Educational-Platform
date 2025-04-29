@@ -44,7 +44,7 @@
 
         <div id="potential-matches-content" style="display: none;">
 
-            @foreach ($users as $user)
+            @foreach ($NotYourMatches as $user)
                 @php
                     $userId = $user->id;
                     $image = $user->profile->profile_image;
@@ -95,47 +95,61 @@
 
         <div id="matches-container">
 
-            {{-- <div id="your-matches-content">
-                <div class="match-card">
-                    <img src="https://via.placeholder.com/400x300" class="profile-image" alt="Profile picture">
-                    <div class="profile-info">
-                        <h2 class="profile-name">Aisha Patel</h2>
-                        <p class="matched-on">Matched on <a href="#" class="match-tag">Number Theory</a></p>
-                        <p class="profile-description">
-                            Professor of Mathematics specializing in combinatorics and graph theory. I'm passionate about
-                            mathematical education and making mathematics accessible to underprivileged communities.
-                        </p>
-                        <p class="interests-title">All Interests:</p>
-                        <div class="interest-tags">
-                            <span class="interest-tag">Combinatorics</span>
-                            <span class="interest-tag">Graph Theory</span>
-                            <span class="interest-tag active">Number Theory</span>
-                        </div> 
-                         <div class="match-footer">
-                        <div class="date">Apr 12, 2023</div>
-                        <div class="message-count">
-                            <span class="message-icon">💬</span> 2 messages
+            <div id="your-matches-content">
+
+                @foreach ($YourMatches as $user)
+                    @php
+                        $userId = $user->id;
+                        $image = $user->profile->profile_image;
+                        $name = $user->name;
+                        $interests = $user->profile->mathematical_interests;
+                        $achievements = $user->profile->achievements;
+
+                    @endphp
+
+                    <div class="match-card">
+                        <img src="{{ $image }}" class="profile-image" alt="Profile picture">
+                        <div class="profile-info">
+                            <h2 class="profile-name">{{ $name }}</h2>
+                            {{-- <p class="matched-on">Matched on <a href="#" class="match-tag">Number Theory</a></p> --}}
+                            <p class="profile-description">
+                                {{ $achievements }}
+
+                            </p>
+                            <p class="interests-title">All Interests:</p>
+                            <div class="interest-tags">
+                                @foreach ($interests as $int)
+                                    <span class="interest-tag">{{ $int }}</span>
+                                @endforeach
+                            </div>
+                            {{-- <div class="match-footer">
+                                <div class="date">Apr 12, 2023</div>
+                                <div class="message-count">
+                                    <span class="message-icon">💬</span> 2 messages
+                                </div>
+                                <a href="/chat">
+                                    <button class="chat-now-btn">
+                                        <span class="chat-icon">💬</span> Chat Now
+                                    </button>
+                                </a>
+                            </div> --}}
                         </div>
-                        <a href="/chat">
-                            <button class="chat-now-btn">
-                                <span class="chat-icon">💬</span> Chat Now
-                            </button>
-                        </a>
-                    </div> 
                     </div>
-                </div>
-            </div> --}}
+                @endforeach
+
+
+            </div>
 
             <!-- Potential Matches Content (Empty State) -->
-            {{-- <div id="potential-matches-content"  style="display: none;">
-            <div class="match-card-empty">
-                <div class="profile-icon">👤</div>
-                <h2 class="empty-message">No potential matches found</h2>
-                <p class="empty-description">
-                    Try adjusting your filter criteria or add more interests to your profile
-                </p>
+            <div id="potential-matches-content" style="display: none;">
+                <div class="match-card-empty">
+                    <div class="profile-icon">👤</div>
+                    <h2 class="empty-message">No potential matches found</h2>
+                    <p class="empty-description">
+                        Try adjusting your filter criteria or add more interests to your profile
+                    </p>
+                </div>
             </div>
-        </div> --}}
 
 
             <div id="no-matches-content" style="display: none;">

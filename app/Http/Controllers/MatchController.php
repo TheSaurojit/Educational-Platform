@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Auth;
 
 class MatchController extends Controller
 {
-    public function getUserIdsThatArePendingOrAccepted(): array
+    public function getUserIdsThatArePendingOrAccepted(array $status): array
     {
         $userId = Auth::id();
 
-        $sent = Friendship::where('sender_id', $userId)->pluck('receiver_id')->toArray();
-        $received = Friendship::where('receiver_id', $userId)->pluck('sender_id')->toArray();
+        $sent = Friendship::where('sender_id', $userId)->whereIn('status', $status)->pluck('receiver_id')->toArray();
+        $received = Friendship::where('receiver_id', $userId)->whereIn('status', $status)->pluck('sender_id')->toArray();
 
         $connectedIds = array_unique(array_merge($sent, $received));
 
@@ -27,7 +27,9 @@ class MatchController extends Controller
     public function  discoverView(): View
     {
         $mathematicians = User::where('id', '!=', Auth::id())
-            ->whereNotIn('id', $this->getUserIdsThatArePendingOrAccepted())
+            ->whereNotIn('id', $this->getUserIdsThatArePendingOrAccepted(
+                ['accepted', 'pending']
+            ))
             ->whereHas('profile', function ($query) {
                 $query->where('is_mathematician', true);
             })
@@ -41,14 +43,24 @@ class MatchController extends Controller
 
     public function matchView(): View
     {
-        $users = User::where('id', '!=', Auth::id())
-            ->whereNotIn('id', $this->getUserIdsThatArePendingOrAccepted())
+        $NotYourMatches = User::where('id', '!=', Auth::id())
+            ->whereNotIn('id', $this->getUserIdsThatArePendingOrAccepted(
+                ['accepted', 'pending']
+            ))
+            ->whereHas('profile')
+            ->with('profile')
+            ->get();
+
+        $YourMatches = User::where('id', '!=', Auth::id())
+            ->whereIn('id', $this->getUserIdsThatArePendingOrAccepted(
+                ['accepted']
+            ))
             ->whereHas('profile')
             ->with('profile')
             ->get();
 
 
-        return view('pages.matches', compact('users'));
+        return view('pages.matches', compact('NotYourMatches', 'YourMatches'));
     }
 
     public function sendRequest($receiverId): RedirectResponse
