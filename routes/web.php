@@ -71,11 +71,11 @@ Route::middleware('isUser')->group(function () {
 
 Route::middleware('isUser')->group(function () {
 
-    Route::controller(PostInteractionController::class)->as('posts.')->group(function () {
-        Route::post('/posts/{post}/like', 'like')->name('like');
-        Route::post('/posts/{post}/unlike', 'unlike')->name('unlike');
-        Route::post('/posts/{post}/comment', 'comment')->name('comment');
-    });
+    // Route::controller(PostInteractionController::class)->as('posts.')->group(function () {
+    //     Route::post('/posts/{post}/like', 'like')->name('like');
+    //     Route::post('/posts/{post}/unlike', 'unlike')->name('unlike');
+    //     Route::post('/posts/{post}/comment', 'comment')->name('comment');
+    // });
 
 
     Route::controller(MatchController::class)->group(function () {
