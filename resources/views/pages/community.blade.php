@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="post-actions">
-                        <div class="post-action" data-action="like" onclick="toggleLike({{ $post->id }})">
+                        <div class="post-action" data-action="like" onclick="toggleLike('{{ $post->id }}')">
                             <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -88,7 +88,7 @@
                             </svg>
                             Like
                         </div>
-                        <div class="post-action" data-action="comment" onclick="toggleComments({{ $post->id }})">
+                        <div class="post-action" data-action="comment" onclick="toggleComments('{{ $post->id }}')">
                             <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="18"
                                 height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -169,6 +169,7 @@
             // Sample data structure kept from original code
 
             const data = (<?= $posts ?>);
+            
 
             const modPosts  = data.map(post => ({
                 id: post.id,
@@ -413,6 +414,8 @@
             };
 
             window.toggleComments = function(postId) {
+                console.log(postId);
+                
                 const post = posts.find(p => p.id === postId);
                 if (post) {
                     // Set the current post ID as a data attribute
