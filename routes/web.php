@@ -82,6 +82,11 @@ Route::middleware('isUser')->group(function () {
 
         Route::get('/create-community', 'createCommunityView')->name('create-community')->middleware('hasProfile');
         Route::post('/create-community', 'createCommunity')->name('create-community')->middleware('hasProfile');
+
+        Route::post('/add-comment', 'addComment')->name('add-comment') ;
+        Route::post('/add-like', 'addLike')->name('add-like') ;
+
+
     });
 
 
