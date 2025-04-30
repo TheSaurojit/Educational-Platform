@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'name' => "John Doe" ,
-            'email' => "user@gmail.com",
+            'email' => "thetanmoy515@gmail.com",
             'password' => Hash::make('123456') ,
             'email_verified_at' => now() 
         ]) ;
