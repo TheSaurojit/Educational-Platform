@@ -66,7 +66,7 @@
                                 </path>
                                 <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
                             </svg>
-                            <span class="like-count">{{ $post->likes->count()  }}</span> likes
+                            <span class="like-count">{{ $post->likes->count() }}</span> likes
                         </div>
                         <div class="post-stat">
                             <svg class="post-stat-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -74,7 +74,7 @@
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
-                            <span class="comment-count">{{ $post->comments->count()  }}</span> comments
+                            <span class="comment-count">{{ $post->comments->count() }}</span> comments
                         </div>
                     </div>
                     <div class="post-actions">
@@ -168,10 +168,24 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Sample data structure kept from original code
 
+            const data = (<?= $posts ?>);
+
+            const modPosts  = data.map(post => ({
+                id: post.id,
+                likes: post.likes,
+                comments: post.comments.map(comment => ({
+                    user_id: comment.user_id,
+                    text: comment.body,
+                    name: comment.user.name,
+                    profile_image: comment.user.profile.profile_image
+                }))
+            }));
+
+            console.log(modPosts);
 
 
-            const posts = [
-                {
+
+            const posts = [{
                     id: 1,
                     author: {
                         name: "ProfEuler42",
@@ -369,7 +383,7 @@
                             `[data-comment-id="${comment.id}"]`);
                         if (commentElement) {
                             const replyFormContainer = commentElement.querySelector(
-                            '.reply-form-container');
+                                '.reply-form-container');
                             replyFormContainer.style.display = 'block';
 
                             // Set up form submission
