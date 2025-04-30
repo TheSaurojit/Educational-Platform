@@ -30,6 +30,16 @@ Route::get('/chat', function () {
 });
 
 
+
+Route::get('/privacy-policy', function () {
+    return view('pages.privacy_policy');
+});
+
+
+Route::get('/terms-condition', function () {
+    return view('pages.terms_condition');
+});
+
 //user routes
 Route::get('/', [HomeController::class, 'home'])->name('home');
 

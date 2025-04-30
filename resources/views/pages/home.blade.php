@@ -143,20 +143,21 @@
         <div class="field-tags-container">
             <div class="field-tags">
                 <span class="field-tag">Number Theory</span>
-                <span class="field-tag">Abstract Algebra</span>
-                <span class="field-tag">Calculus</span>
-                <span class="field-tag">Real Analysis</span>
-                <span class="field-tag">Complex Analysis</span>
-                <span class="field-tag">Topology</span>
-                <span class="field-tag">Differential Geometry</span>
-                <span class="field-tag">Linear Algebra</span>
-                <span class="field-tag">Combinatorics</span>
-                <span class="field-tag">Graph Theory</span>
-                <span class="field-tag">Probability Theory</span>
-                <span class="field-tag">Statistics</span>
-                <span class="field-tag">Applied Mathematics</span>
-                <span class="field-tag">Mathematical Physics</span>
-                <span class="field-tag">Mathematical Logic</span>
+<span class="field-tag">Abstract Algebra</span>
+<span class="field-tag">Calculus</span>
+<span class="field-tag">Real Analysis</span>
+<span class="field-tag">Complex Analysis</span>
+<span class="field-tag">Topology</span>
+<span class="field-tag">Differential Geometry</span>
+<span class="field-tag">Linear Algebra</span>
+<span class="field-tag">Combinatorics</span>
+<span class="field-tag">Graph Theory</span>
+<span class="field-tag">Probability Theory</span>
+<span class="field-tag">Statistics</span>
+<span class="field-tag">Applied Mathematics</span>
+<span class="field-tag">Mathematical Physics</span>
+<span class="field-tag">Mathematical Logic</span>
+
             </div>
 
             {{-- <button class="discover-more-btn">Discover More Fields</button> --}}
@@ -214,7 +215,7 @@
         </div>
     </section>
     <!-- Call to Action Section -->
-    <section class="cta-section">
+    {{-- <section class="cta-section">
         <div class="cta-content">
             <h2>Ready to Find Your Mathematical Match?</h2>
             <p>Join our community of math enthusiasts and discover connections that will inspire and challenge you.</p>
@@ -228,7 +229,7 @@
                 </svg>
             </a>
         </div>
-    </section>
+    </section> --}}
 @endsection
 
 @section('script-section')

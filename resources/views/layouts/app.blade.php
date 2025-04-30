@@ -326,13 +326,14 @@
             <div class="footer-section">
                 <h3 class="footer-heading">Navigation</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Matches</a></li>
-                    <li><a href="#">Discover</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/matches">Matches</a></li>
+                    <li><a href="/discover">Discover</a></li>
+                    <li><a href="/community">Community</a></li>
                 </ul>
             </div>
-
+{{-- 
             <div class="footer-section">
                 <h3 class="footer-heading">Resources</h3>
                 <ul class="footer-links">
@@ -340,14 +341,14 @@
                     <li><a href="#">Community</a></li>
                     <li><a href="#">FAQs</a></li>
                 </ul>
-            </div>
+            </div> --}}
 
             <div class="footer-section">
                 <h3 class="footer-heading">Legal</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/terms-condition">Terms of Service</a></li>
+                    {{-- <li><a href="#">Cookie Policy</a></li> --}}
                     {{-- <li><a href="#">Contact Us</a></li> --}}
                 </ul>
             </div>

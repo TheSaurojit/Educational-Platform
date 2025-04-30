@@ -34,7 +34,21 @@
                 <button class="clear-filter-btn" id="clear-filter-btn">Clear Filter</button>
 
                 <div class="interests-container">
-                    @foreach (['Number Theory', 'Abstract Algebra', 'Calculus', 'Real Analysis', 'Complex Analysis', 'Topology', 'Differential Geometry', 'Linear Algebra', 'Combinatorics', 'Graph Theory', 'Probability Theory', 'Statistics', 'Mathematical Physics', 'Algebraic Geometry', 'Cryptography', 'Mathematical Biology', 'Data Science', 'Numerical Analysis', 'Optimization', 'Machine Learning'] as $interest)
+                    @foreach ([ "Number Theory",
+                    "Abstract Algebra",
+                    "Calculus",
+                    "Real Analysis",
+                    "Complex Analysis",
+                    "Topology",
+                    "Differential Geometry",
+                    "Linear Algebra",
+                    "Combinatorics",
+                    "Graph Theory",
+                    "Probability Theory",
+                    "Statistics",
+                    "Applied Mathematics",
+                    "Mathematical Physics",
+                    "Mathematical Logic"] as $interest)
                         <div class="interest-pill" data-interest="{{ $interest }}">{{ $interest }}</div>
                     @endforeach
                 </div>

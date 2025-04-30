@@ -241,26 +241,23 @@
             // Math interests
             const interests = [
                 "Number Theory",
-                "Abstract Algebra",
-                "Calculus",
-                "Real Analysis",
-                "Complex Analysis",
-                "Topology",
-                "Differential Geometry",
-                "Linear Algebra",
-                "Combinatorics",
-                "Graph Theory",
-                "Probability Theory",
-                "Statistics",
-                "Mathematical Physics",
-                "Algebraic Geometry",
-                "Cryptography",
-                "Mathematical Biology",
-                "Data Science",
-                "Numerical Analysis",
-                "Optimization",
-                "Machine Learning",
-            ];
+    "Abstract Algebra",
+    "Calculus",
+    "Real Analysis",
+    "Complex Analysis",
+    "Topology",
+    "Differential Geometry",
+    "Linear Algebra",
+    "Combinatorics",
+    "Graph Theory",
+    "Probability Theory",
+    "Statistics",
+    "Applied Mathematics",
+    "Mathematical Physics",
+    "Mathematical Logic"
+];
+
+
 
             // Create header
             const header = document.createElement("h3");

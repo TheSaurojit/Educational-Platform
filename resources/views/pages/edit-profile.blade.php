@@ -176,23 +176,23 @@
 
         // Mathematical interests dropdown
         const mathInterests = [
-            "Arithmetic",
-            "Pre-Algebra",
-            "Algebra",
-            "Geometry",
-            "Trigonometry",
-            "Calculus",
-            "Linear Algebra",
-            "Discrete Mathematics",
-            "Applied Mathematics",
-            "Probability and Statistics",
-            "Differential Equations",
-            "Abstract Algebra",
-            "Number Theory",
-            "Real and Complex Analysis",
-            "Mathematical Logic and Foundations",
-            "Topology"
-        ];
+    "Number Theory",
+    "Abstract Algebra",
+    "Calculus",
+    "Real Analysis",
+    "Complex Analysis",
+    "Topology",
+    "Differential Geometry",
+    "Linear Algebra",
+    "Combinatorics",
+    "Graph Theory",
+    "Probability Theory",
+    "Statistics",
+    "Applied Mathematics",
+    "Mathematical Physics",
+    "Mathematical Logic"
+];
+
 
         const interestsSelect = document.getElementById('interests-select');
         const optionsContainer = document.getElementById('options-container');
