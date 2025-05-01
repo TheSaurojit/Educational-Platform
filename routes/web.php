@@ -3,9 +3,11 @@
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -54,12 +56,27 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::middleware('isUser')->group(function () {
 
+    Route::controller(ChatController::class)->group(function () {
+        // Route::get('/chat/{user}', 'showChat')->name('chat');
+    });
+
+    Route::controller(MessageController::class)->group(function () {
+
+        //apis
+        // Route::get('/message/{chat}',  'getNewMsg');     // get messages
+        // Route::post('/message/{chat}',  'storeMsg')->name('storeMsg');     // send message
+        // Route::post('/messages/{message}/read',  'markAsRead');   // mark as read
+    });
+
+
+
     Route::controller(MatchController::class)->as('friend.')->group(function () {
 
         Route::post('/send-request/{receiverId}', 'sendRequest')->name('send');
         Route::post('/accept-request/{senderId}', 'acceptRequest')->name('accept');
         Route::post('/reject-request/{senderId}', 'rejectRequest')->name('reject');
     });
+
     Route::get('/notifications',  [MatchController::class, 'notifications'])->name('notifications');
 
 
@@ -78,6 +95,7 @@ Route::middleware('isUser')->group(function () {
             Route::get('/create-community', 'createCommunityView')->name('create-community');
             Route::post('/create-community', 'createCommunity')->name('create-community');
 
+            //apis
             Route::post('/add-comment', 'addComment')->name('add-comment');
             Route::post('/add-like', 'addLike')->name('add-like');
         });

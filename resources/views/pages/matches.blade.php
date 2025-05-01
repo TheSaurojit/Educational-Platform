@@ -146,15 +146,15 @@
                                     @endforeach
                                 </div>
                                 <div class="match-footer">
-                                <div class="date">Apr 12, 2023</div>
+                                {{-- <div class="date">Apr 12, 2023</div>
                                 <div class="message-count">
                                     <span class="message-icon">💬</span> 2 messages
                                 </div>
-                                <a href="/chat">
+                                <a href="{{ route('chat',['user'=>$userId])}}">
                                     <button class="chat-now-btn">
                                         <span class="chat-icon">💬</span> Chat Now
                                     </button>
-                                </a>
+                                </a> --}}
                             </div>
                             </div>
                         </div>

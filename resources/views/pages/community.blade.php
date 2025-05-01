@@ -252,7 +252,7 @@
 
             //send comment to backend
             function sendComment(postId, comment) {
-                fetch('/add-comment', {
+                fetch("{{ route('add-comment') }}", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -273,8 +273,8 @@
 
             //send like to backend
             function sendLike(postId) {
-                fetch('/add-like', {
-                        method: 'POST',
+                fetch("{{ route('add-like') }}", {
+                    method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': '<?= csrf_token() ?>'
