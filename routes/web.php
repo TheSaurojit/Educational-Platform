@@ -23,11 +23,9 @@ Route::prefix('admin')->as('admin.')->group(function () {
 });
 
 
-
 Route::get('/chat', function () {
     return view('pages.chat');
 });
-
 
 
 Route::get('/privacy-policy', function () {
@@ -38,6 +36,8 @@ Route::get('/privacy-policy', function () {
 Route::get('/terms-condition', function () {
     return view('pages.terms_condition');
 });
+
+
 
 //user routes
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -53,8 +53,6 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 // Friend Request Routes
 
 Route::middleware('isUser')->group(function () {
-
-
 
     Route::controller(MatchController::class)->as('friend.')->group(function () {
 
