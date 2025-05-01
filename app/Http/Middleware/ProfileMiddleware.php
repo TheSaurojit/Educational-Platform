@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileMiddleware
@@ -17,10 +18,16 @@ class ProfileMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::user()->profile) {
-
-            return to_route('create-profile') ;
-            // ->withErrors(['error' => 'Create Profile First']) ;
+        
+            if ($request->ajax()) {
+                // For AJAX requests, return JSON error
+                return response()->json(['error' => 'Profile not found.'], 403);
+            }
+    
+            // For web requests, redirect to profile creation
+            return redirect()->route('create-profile');
         }
+
         return $next($request);
     }
 }

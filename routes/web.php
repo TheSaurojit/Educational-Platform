@@ -80,13 +80,14 @@ Route::middleware('isUser')->group(function () {
 
         Route::get('/community', 'communityView')->name('community');
 
-        Route::get('/create-community', 'createCommunityView')->name('create-community')->middleware('hasProfile');
-        Route::post('/create-community', 'createCommunity')->name('create-community')->middleware('hasProfile');
+        Route::middleware('hasProfile')->group(function () {
 
-        Route::post('/add-comment', 'addComment')->name('add-comment') ;
-        Route::post('/add-like', 'addLike')->name('add-like') ;
+            Route::get('/create-community', 'createCommunityView')->name('create-community');
+            Route::post('/create-community', 'createCommunity')->name('create-community');
 
-
+            Route::post('/add-comment', 'addComment')->name('add-comment');
+            Route::post('/add-like', 'addLike')->name('add-like');
+        });
     });
 
 

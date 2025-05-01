@@ -169,6 +169,10 @@
 
                     const userId = "<?= Auth::id() ?>" ;
 
+                    const userName = "<?= Auth::user()->name ?>" ;
+                    const userProfilePic = "<?= Auth::user()->profile->profile_image ?>" ;
+
+
 
                     // Create a consistent posts data structure
                     const posts = rawPosts.map(post => ({
@@ -536,8 +540,8 @@
                                     const newComment = createComment(
                                         Date.now(), // Use timestamp as ID
                                         {
-                                            name: "You",
-                                            profilePic: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2'><circle cx='12' cy='8' r='5'/><path d='M20 21v-2a7 7 0 0 0-14 0v2'/></svg>"
+                                            name: userName,
+                                            profilePic: userProfilePic
                                         },
                                         commentText
                                     );
