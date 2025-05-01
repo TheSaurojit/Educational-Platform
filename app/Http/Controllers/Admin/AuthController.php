@@ -45,4 +45,34 @@ class AuthController extends Controller
         // Redirect to a specific page, e.g., admin dashboard
         return redirect()->route('admin.dashboard');
     }
+
+    public function changePasswordForm() {
+        return view('admin.change-password');
+        // function body
+    }
+
+    public function changePassword(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $user = $request->user();
+
+
+        // Check if the current password is correct
+        if (!Hash::check($request->current_password, $user->password)) {
+
+            return back()->withErrors(['error' => 'Entered wrong current password ']);
+        }
+
+        // Update the password
+        $user->forceFill([
+            'password' => Hash::make($request->new_password),
+        ])->save();
+
+        return redirect()->back()->with(['success' => 'Password changed successfully']);
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
@@ -18,6 +19,19 @@ Route::prefix('admin')->as('admin.')->group(function () {
     Route::middleware('isAdmin')->group(function () {
 
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+
+
+        //user management
+        Route::get('/users',[UserController::class,'getUsers'])->name('users');
+        Route::post('/delete-user/{user}',[UserController::class,'deleteUser'])->name('delete-user');
+
+        //password reset
+        Route::get('/change-password',[AdminAuthController::class,'changePasswordForm'])->name('change-password');
+        Route::post('/change-password',[AdminAuthController::class,'changePassword'])->name('change-password');
+
+
+
+
     });
 
     Route::get('/login', [AdminAuthController::class, 'loginView'])->name('login');

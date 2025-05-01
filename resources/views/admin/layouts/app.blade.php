@@ -178,9 +178,23 @@
                     <ul class="metismenu list-unstyled" id="side-menu">
 
                         <li>
-                            <a href="#">
+                            <a href="{{ route('admin.dashboard') }}">
+                                <i class="bx bx-user-circle"></i>
+                                <span key="t-dashboards">Dashboard </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.users') }}">
                                 <i class="bx bx-user-circle"></i>
                                 <span key="t-dashboards">Users </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.change-password') }}">
+                                <i class="bx bx-user-circle"></i>
+                                <span key="t-dashboards">Change Password </span>
                             </a>
                         </li>
 
