@@ -18,8 +18,4 @@ class Profile extends Model
                 );
     }
 
-    // public function getMathematicalInterests() {
-
-    //     return json_decode($this->mathematical_interests , true );
-    // }
 }

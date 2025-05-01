@@ -6,7 +6,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
-use App\Http\Controllers\PostInteractionController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -55,11 +54,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 
 Route::middleware('isUser')->group(function () {
 
-    // Route::controller(PostInteractionController::class)->as('posts.')->group(function () {
-    //     Route::post('/posts/{post}/like', 'like')->name('like');
-    //     Route::post('/posts/{post}/unlike', 'unlike')->name('unlike');
-    //     Route::post('/posts/{post}/comment', 'comment')->name('comment');
-    // });
+
 
     Route::controller(MatchController::class)->as('friend.')->group(function () {
 

@@ -145,7 +145,7 @@
                                         <span class="interest-tag">{{ $int }}</span>
                                     @endforeach
                                 </div>
-                                {{-- <div class="match-footer">
+                                <div class="match-footer">
                                 <div class="date">Apr 12, 2023</div>
                                 <div class="message-count">
                                     <span class="message-icon">💬</span> 2 messages
@@ -155,7 +155,7 @@
                                         <span class="chat-icon">💬</span> Chat Now
                                     </button>
                                 </a>
-                            </div> --}}
+                            </div>
                             </div>
                         </div>
                     </a>
