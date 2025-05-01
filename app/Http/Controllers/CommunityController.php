@@ -23,7 +23,7 @@ class CommunityController extends Controller
             'user:id,name',             // load only id, name of users
             'user.profile:user_id,profile_image', // select profile fields
             'likes:user_id,post_id',  // select likes fields
-            'comments:post_id,user_id,body', // select basic comment fields
+            'comments:id,post_id,user_id,body', // select basic comment fields
             'comments.user:id,name',    // commenter user fields
             'comments.user.profile:id,user_id,profile_image' // commenter profile
         ])->latest()->get();
