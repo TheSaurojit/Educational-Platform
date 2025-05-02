@@ -44,7 +44,6 @@
                     $time = $post?->created_at?->format('d  M , Y');
                     $name = $post?->user?->name;
                     $profile_image = $post?->user?->profile?->profile_image;
-                    dump($name , $post?->user);
                 @endphp
 
                 <div class="post-card" data-post-id="{{ $post->id }}">
