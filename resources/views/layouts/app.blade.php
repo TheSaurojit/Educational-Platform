@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maths-matchmaker</title>
     <style>
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+
         .toast-container {
             position: absolute;
             top: 20px;
@@ -334,6 +339,7 @@
                     <li><a href="/matches">Matches</a></li>
                     <li><a href="/discover">Discover</a></li>
                     <li><a href="/community">Community</a></li>
+                    <li><a href="/contact-us">Contact Us</a></li>
                 </ul>
             </div>
             {{-- 

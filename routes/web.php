@@ -53,6 +53,18 @@ Route::get('/terms-condition', function () {
     return view('pages.terms_condition');
 });
 
+Route::get('/contact-us', function () {
+    return view('pages.contact-us');
+});
+
+Route::get('/email-form', function () {
+    return view('pages.email-form');
+});
+
+Route::get('/reset-password', function () {
+    return view('pages.reset-password');
+});
+
 
 
 //user routes

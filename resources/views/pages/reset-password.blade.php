@@ -237,7 +237,7 @@
             font-weight: 500;
         }
 
-        .submit-btn {
+        .save-btn {
             background-color: var(--primary-color);
             color: var(--white);
             border: none;
@@ -372,14 +372,15 @@
                 <div class="math-symbols symbol-3">∫</div>
                 <div class="math-symbols symbol-4">√</div>
                 <div class="image-content">
-                    <h1>Welcome Back</h1>
-                    <p>Sign in to continue your mathematical journey and reconnect with the community.</p>
+                    <h1>Create New Password</h1>
+                    <p>Choose a strong new password and be sure to remember it.</p>
                 </div>
             </div>
 
             <div class="auth-form">
-                <h2 class="form-title">Sign In</h2>
-                <p class="form-subtitle">Access your account and continue exploring mathematics</p>
+                <h2 class="form-title">Create New Password</h2>
+                <p class="form-subtitle">Choose a strong new password and be sure to remember it.</p>
+                
 
 
                 @if ($errors->any())
@@ -399,38 +400,17 @@
                 @endif
 
 
-                <form id="signinForm" action="{{ route('login') }}" method="POST">
-                    @csrf
+                <form id="Emailform">
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email">
+                        <label for="signup-password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Create a password">
                     </div>
-
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Enter your password">
+                        <label for="signup-password">Confirm Password</label>
+                        <input type="password" name="confirm-password" id="confirm-password" placeholder="Create a password">
                     </div>
 
-                    <div class="remember-forgot">
-                        <div class="remember">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">Remember me</label>
-                        </div>
-                        <a href="/email-form" class="forgot-pass">Forgot password?</a>
-                    </div>
-
-                    <button type="submit" class="submit-btn" id="signinBtn">Sign In</button>
-
-                    {{-- <div class="social-login">
-                        <p>Or continue with</p>
-                        <div class="social-icons">
-                            <div class="social-icon">G</div>
-                        </div>
-                    </div> --}}
-
-                    <p class="signup-text">
-                        Don't have an account? <a href="/register" class="signup-link">Sign Up</a>
-                    </p>
+                    <button type="submit" class="save-btn" id="saveBtn">Save</button>
                 </form>
             </div>
         </div>
