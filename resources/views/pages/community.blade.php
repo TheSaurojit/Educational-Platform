@@ -38,12 +38,13 @@
 
             @foreach ($posts as $post)
                 @php
-                    $title = $post->title;
-                    $image = $post->image;
-                    $body = $post->body;
-                    $time = $post->created_at->format('d  M , Y');
-                    $name = $post->user->name;
-                    $profile_image = $post->user->profile->profile_image;
+                    $title = $post?->title;
+                    $image = $post?->image;
+                    $body = $post?->body;
+                    $time = $post?->created_at?->format('d  M , Y');
+                    $name = $post?->user?->name;
+                    $profile_image = $post?->user?->profile?->profile_image;
+                    dump($post);
                 @endphp
 
                 <div class="post-card" data-post-id="{{ $post->id }}">
