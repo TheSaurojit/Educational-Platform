@@ -36,7 +36,7 @@
 
 
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label class="required">Are you a mathematician?</label>
                 <div class="radio-group">
                     <div class="radio-option">
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="error-message" id="mathematician-error" style="display: none;">Please select an option</div>
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <label for="address">Address</label>

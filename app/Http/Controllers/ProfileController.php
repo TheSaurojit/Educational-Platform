@@ -33,7 +33,6 @@ class ProfileController extends Controller
 
     public function showProfileForm()
     {
-        // $data = Profile::where('user_id', Auth::id())->first();
 
         $data = Auth::user()->profile;
 
@@ -44,7 +43,7 @@ class ProfileController extends Controller
     {
         $rules = [
             'profile_image' => ['required', 'image', 'mimes:jpg,png,jpeg', 'max:2048'],
-            'is_mathematician' => ['required'],
+            // 'is_mathematician' => ['required'],
             'mathematical_interests' => ['required', 'array', 'min:1', 'max:5'],
             'address' => ['nullable', 'string'],
             'achievements' => ['nullable', 'string'],
@@ -64,7 +63,7 @@ class ProfileController extends Controller
 
 
         // Simplify is_mathematician logic
-        $validatedData['is_mathematician'] = $request->boolean('is_mathematician');
+        // $validatedData['is_mathematician'] = $request->boolean('is_mathematician');
 
         // Encode mathematical interests
         $validatedData['mathematical_interests'] = json_encode($request->input('mathematical_interests'));
@@ -79,7 +78,7 @@ class ProfileController extends Controller
     {
         $rules = [
             'profile_image' => ['image', 'mimes:jpg,png,jpeg'],
-            'is_mathematician' => ['string'],
+            // 'is_mathematician' => ['string'],
             'mathematical_interests' => ['required', 'array', 'min:1', 'max:5'],
             'address' => ['nullable', 'string'],
             'achievements' => ['nullable', 'string'],
@@ -99,8 +98,8 @@ class ProfileController extends Controller
         }
 
         // Simplify is_mathematician logic
-        $validatedData['is_mathematician'] = $request->boolean('is_mathematician');
-
+        // $validatedData['is_mathematician'] = $request->boolean('is_mathematician');
+        
         // Encode mathematical interests
         $validatedData['mathematical_interests'] = json_encode($request->input('mathematical_interests'));
 
