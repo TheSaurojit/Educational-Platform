@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function getusers()
     {
-        $users = User::where('is_admin', false)->get();
+        $users = User::with('profile')->where('is_admin', false)->get();
 
         return view('admin.users', compact('users'));
     }
@@ -20,5 +20,13 @@ class UserController extends Controller
         $user->delete();
 
         return back()->with('success', 'User Deleted');
+    }
+    public function makeMathematician(User $user)
+    {
+        $profile = $user->profile;
+        $profile->is_mathematician = !$profile->is_mathematician;
+        $profile->save();
+
+        return back()->with('success','Profile Updated');
     }
 }

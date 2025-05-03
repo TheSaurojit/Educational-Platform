@@ -26,9 +26,15 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('/users-feedback', [FeedbackController::class,'allFeedbacks'])->name('feedbacks');
 
 
+
+
         //user management
         Route::get('/users', [UserController::class, 'getUsers'])->name('users');
         Route::post('/delete-user/{user}', [UserController::class, 'deleteUser'])->name('delete-user');
+
+        Route::post('/make-mathematician/{user}', [UserController::class,'makeMathematician'])->name('makeMathematician');
+
+
 
         //password reset
         Route::get('/change-password', [AdminAuthController::class, 'changePasswordForm'])->name('change-password');
