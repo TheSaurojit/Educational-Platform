@@ -339,7 +339,7 @@
                     <li><a href="/matches">Matches</a></li>
                     <li><a href="/discover">Discover</a></li>
                     <li><a href="/community">Community</a></li>
-                    <li><a href="/contact-us">Contact Us</a></li>
+                    <li><a href="/feedback">Send Feedback</a></li>
                 </ul>
             </div>
             {{-- 

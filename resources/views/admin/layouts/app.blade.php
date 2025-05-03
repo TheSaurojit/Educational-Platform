@@ -192,6 +192,13 @@
                         </li>
 
                         <li>
+                            <a href="{{ route('admin.feedbacks') }}">
+                                <i class="bx bx-user-circle"></i>
+                                <span key="t-dashboards">User Feedbacks </span>
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="{{ route('admin.change-password') }}">
                                 <i class="bx bx-user-circle"></i>
                                 <span key="t-dashboards">Change Password </span>

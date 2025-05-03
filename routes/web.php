@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\MessageController;
@@ -20,6 +21,9 @@ Route::prefix('admin')->as('admin.')->group(function () {
     Route::middleware('isAdmin')->group(function () {
 
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
+
+        //user feedback
+        Route::get('/users-feedback', [FeedbackController::class,'allFeedbacks'])->name('feedbacks');
 
 
         //user management
@@ -50,22 +54,22 @@ Route::get('/terms-condition', function () {
     return view('pages.terms_condition');
 });
 
-Route::get('/contact-us', function () {
-    return view('pages.contact-us');
-});
 
 //user routes
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
+Route::get('/feedback', [FeedbackController::class, 'showForm'])->name('feedback');
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback');
+
+
 // Route::get('/', fn() => User::create([
 //     'name' => "admin",
 //     'email' => "admin@gmail.com",
-//     'password' => Hash::make('P@$$WoRd!!!'),
+//     'password' => Hash::make('123456789'),
 //     'is_admin' => true
 // ]))->name('home');
 
 
-// Friend Request Routes
 
 Route::middleware('isUser')->group(function () {
 
@@ -146,15 +150,12 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 //user forget password
+Route::controller(PasswordController::class)->group(function () {
+    // Forgot password flow
+    Route::get('/forgot-password', 'showForgotForm')->name('password.request');
+    Route::post('/forgot-password', 'sendResetLink')->name('password.email');
 
-// Show form to enter email
-Route::get('/forgot-password', [PasswordController::class, 'showForgotForm'])->name('password.request');
-
-// Handle email submission
-Route::post('/forgot-password', [PasswordController::class, 'sendResetLink'])->name('password.email');
-
-// Show form to reset password (with token)
-Route::get('/reset-password/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
-
-// Handle reset form submission
-Route::post('/reset-password', [PasswordController::class, 'resetPassword'])->name('password.update');
+    // Password reset flow
+    Route::get('/reset-password/{token}', 'showResetForm')->name('password.reset');
+    Route::post('/reset-password', 'resetPassword')->name('password.update');
+});

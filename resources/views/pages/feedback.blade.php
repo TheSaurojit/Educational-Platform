@@ -20,7 +20,8 @@
     
     <div class="contact-form-container">
         <div class="contact-form">
-            <form id="contactForm">
+            <form method="POST" id="contactForm">
+                @csrf
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" placeholder="Your name" required>
@@ -29,17 +30,6 @@
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <select id="subject" name="subject">
-                        <option value="general">General Inquiry</option>
-                        <option value="support">Technical Support</option>
-                        <option value="feature">Feature Request</option>
-                        <option value="partnership">Partnership Opportunity</option>
-                        <option value="other">Other</option>
-                    </select>
                 </div>
                 
                 <div class="form-group">
