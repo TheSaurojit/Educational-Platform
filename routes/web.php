@@ -9,6 +9,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -22,16 +23,12 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
 
         //user management
-        Route::get('/users',[UserController::class,'getUsers'])->name('users');
-        Route::post('/delete-user/{user}',[UserController::class,'deleteUser'])->name('delete-user');
+        Route::get('/users', [UserController::class, 'getUsers'])->name('users');
+        Route::post('/delete-user/{user}', [UserController::class, 'deleteUser'])->name('delete-user');
 
         //password reset
-        Route::get('/change-password',[AdminAuthController::class,'changePasswordForm'])->name('change-password');
-        Route::post('/change-password',[AdminAuthController::class,'changePassword'])->name('change-password');
-
-
-
-
+        Route::get('/change-password', [AdminAuthController::class, 'changePasswordForm'])->name('change-password');
+        Route::post('/change-password', [AdminAuthController::class, 'changePassword'])->name('change-password');
     });
 
     Route::get('/login', [AdminAuthController::class, 'loginView'])->name('login');
@@ -56,16 +53,6 @@ Route::get('/terms-condition', function () {
 Route::get('/contact-us', function () {
     return view('pages.contact-us');
 });
-
-Route::get('/email-form', function () {
-    return view('pages.email-form');
-});
-
-Route::get('/reset-password', function () {
-    return view('pages.reset-password');
-});
-
-
 
 //user routes
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -153,8 +140,21 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login')->name('login');
 
-
     Route::get('/verify/{token}', 'emailVerify')->name('email.verify');
 
     Route::post('/logout', 'logout')->name('logout');
 });
+
+//user forget password
+
+// Show form to enter email
+Route::get('/forgot-password', [PasswordController::class, 'showForgotForm'])->name('password.request');
+
+// Handle email submission
+Route::post('/forgot-password', [PasswordController::class, 'sendResetLink'])->name('password.email');
+
+// Show form to reset password (with token)
+Route::get('/reset-password/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
+
+// Handle reset form submission
+Route::post('/reset-password', [PasswordController::class, 'resetPassword'])->name('password.update');

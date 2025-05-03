@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maths-matchmaker </title>
+    <title>Maths-matchmaker | Forgot Password </title>
     <style>
         * {
             margin: 0;
@@ -237,7 +237,7 @@
             font-weight: 500;
         }
 
-        .save-btn {
+        .send-btn {
             background-color: var(--primary-color);
             color: var(--white);
             border: none;
@@ -372,15 +372,14 @@
                 <div class="math-symbols symbol-3">∫</div>
                 <div class="math-symbols symbol-4">√</div>
                 <div class="image-content">
-                    <h1>Create New Password</h1>
-                    <p>Choose a strong new password and be sure to remember it.</p>
+                    <h1>Reset Password</h1>
+                    <p>Enter your email address and we'll send you a link to reset your password.</p>
                 </div>
             </div>
 
             <div class="auth-form">
-                <h2 class="form-title">Create New Password</h2>
-                <p class="form-subtitle">Choose a strong new password and be sure to remember it.</p>
-                
+                <h2 class="form-title">Forgot Password</h2>
+                <p class="form-subtitle">Enter your email address and we'll send you a link to reset your password.</p>
 
 
                 @if ($errors->any())
@@ -400,17 +399,15 @@
                 @endif
 
 
-                <form id="Emailform">
+                <form id="Emailform" method="POST">
+  
+                    @csrf
                     <div class="form-group">
-                        <label for="signup-password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Create a password">
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-password">Confirm Password</label>
-                        <input type="password" name="confirm-password" id="confirm-password" placeholder="Create a password">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="Enter your email">
                     </div>
 
-                    <button type="submit" class="save-btn" id="saveBtn">Save</button>
+                    <button type="submit" class="send-btn" id="sendBtn">Send</button>
                 </form>
             </div>
         </div>

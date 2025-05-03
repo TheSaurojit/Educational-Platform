@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
+
 
 class AuthController extends Controller
 {
     // Show Registration Form
     public function showRegisterForm()
     {
-        return view('pages.register');
+        return view('pages.auth.register');
     }
 
     // Handle Registration
@@ -54,7 +56,7 @@ class AuthController extends Controller
     // Show Login Form
     public function showLoginForm()
     {
-        return view('pages.login');
+        return view('pages.auth.login');
     }
 
     // Handle Login
@@ -94,7 +96,7 @@ class AuthController extends Controller
         return to_route('login');
     }
 
-    //email verify
+    //email verify for registering
     public function emailVerify($token)
     {
 
