@@ -106,10 +106,44 @@
             const typingIndicator = document.getElementById('typing-indicator');
 
 
-            // sendMessageToBackend("fuckk")
+            async function getMessagesFromBackend() {
+                try {
+                    const response = await fetch('{{ route('getNewMsg', ['chatId' => $chatId]) }}');
+                    const {
+                        messages
+                    } = await response.json();
+
+                    messages.forEach((msg) => {
+                        const date = new Date(msg.created_at);
+
+                        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                        ];
+                        const day = date.getDate().toString().padStart(2, '0');
+                        const month = months[date.getMonth()];
+                        const hours = date.getHours();
+                        const minutes = date.getMinutes().toString().padStart(2, '0');
+                        const period = hours >= 12 ? 'pm' : 'am';
+                        const formattedHours = ((hours % 12) || 12).toString().padStart(2, '0');
+
+                        const timeString = `${day} ${month}, ${formattedHours}:${minutes} ${period}`;
+                        const message = msg.message;
+
+                        addMessage(message, timeString, 'received');
+                    });
+
+                } catch (error) {
+                    console.log("Error in getting messages:", error);
+                }
+            }
+
+            setInterval(() => {
+                getMessagesFromBackend()
+            }, 4000);
+
 
             function sendMessageToBackend(message) {
-                fetch('{{ route('storeMsg', ['chat' => $chatId]) }}', {
+                fetch('{{ route('storeMsg', ['chatId' => $chatId]) }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -121,7 +155,7 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // console.log('Response:', data);
+                        console.log('Response:', data);
                     })
                     .catch(err => console.log(err));
 
@@ -189,44 +223,35 @@
                 if (message) {
                     // Get current time
                     const now = new Date();
+
+                    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                    ];
+                    const day = now.getDate().toString().padStart(2, '0');
+                    const month = months[now.getMonth()];
                     const hours = now.getHours();
                     const minutes = now.getMinutes().toString().padStart(2, '0');
-                    const period = hours >= 12 ? 'PM' : 'AM';
-                    const formattedHours = (hours % 12) || 12;
-                    const timeString = `Apr ${now.getDate()}, ${formattedHours}:${minutes} ${period}`;
+                    const period = hours >= 12 ? 'pm' : 'am';
+                    const formattedHours = ((hours % 12) || 12).toString().padStart(2, '0');
 
-                    // Add sent message
-                    addMessage(message, timeString, 'sent');
+                    const timeString = `${day} ${month}, ${formattedHours}:${minutes} ${period}`;
+
+                    try {
+
+                        setTimeout(() => {
+                            sendMessageToBackend(message);
+                        }, 1000)
+                        
+                        addMessage(message, timeString, 'sent');
+                    } catch (error) {
+                        console.log(error);
+
+                    }
 
                     // Clear input and reset height
                     messageInput.value = '';
                     messageInput.style.height = 'auto';
 
-                    // Show typing indicator then response
-                    setTimeout(() => {
-                        showTypingIndicator().then(() => {
-                            // Generate a response based on the message
-                            let response;
-
-                            if (message.toLowerCase().includes('prime')) {
-                                response =
-                                    "Yes, prime number distribution is fascinating! Have you looked into the Riemann Hypothesis? It's closely related to understanding prime patterns.";
-                            } else if (message.toLowerCase().includes('number') || message
-                                .toLowerCase().includes('theory')) {
-                                response =
-                                    "Number theory is such a deep field! I've been particularly interested in Diophantine equations lately. What aspects are you most curious about?";
-                            } else if (message.toLowerCase().includes('math')) {
-                                response =
-                                    "Mathematics connects us all! Besides number theory, I also enjoy combinatorics and graph theory. Do you explore other mathematical areas too?";
-                            } else {
-                                response =
-                                    "That's interesting! Speaking of mathematics, have you been to any conferences or seminars recently? I find them so inspiring.";
-                            }
-
-                            // Add received message
-                            addMessage(response, timeString, 'received');
-                        });
-                    }, 500);
                 }
             }
 

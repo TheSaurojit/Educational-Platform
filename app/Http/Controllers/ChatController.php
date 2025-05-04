@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chat;
 use App\Models\Friendship;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +31,16 @@ class ChatController extends Controller
 
     private function getChat($currentUserId, $userId)
     {
-        return Chat::with('messages')->where(function ($query) use ($currentUserId, $userId) {
-            $query->where('user_one_id', $currentUserId)->where('user_two_id', $userId);
-        })->orWhere(function ($query) use ($currentUserId, $userId) {
-            $query->where('user_one_id', $userId)->where('user_two_id', $currentUserId);
-        })->first();
+
+        return Chat::where(function ($query) use ($currentUserId, $userId) {
+            $query->where('user_one_id', $currentUserId)
+                ->where('user_two_id', $userId);
+            })
+            ->orWhere(function ($query) use ($currentUserId, $userId) {
+                $query->where('user_one_id', $userId)
+                    ->where('user_two_id', $currentUserId);
+            })
+            ->first();
     }
 
 
@@ -52,7 +58,7 @@ class ChatController extends Controller
 
 
         // Check if a chat already exists
-        $chat = $this->getChat($currentUserId,$user->id);
+        $chat = $this->getChat($currentUserId, $user->id);
 
 
         // If no chat exists, create one
@@ -63,9 +69,12 @@ class ChatController extends Controller
             ]);
         }
 
+        $senderMessages = Message::where('chat_id',$chat->id)->where('sender_id',$currentUserId)->oldest()->get();
 
+        $receiverMessages = Message::whereNotNull('read_at')->where('chat_id',$chat->id)->where('receiver_id',$currentUserId)->oldest()->get();
 
-        $messages = $chat->messages;
+        $messages = $senderMessages->merge($receiverMessages)->sortBy('created_at')->values();
+
 
         // Return the chat view with the chat record
         return view('pages.chat', compact('chat', 'messages'));

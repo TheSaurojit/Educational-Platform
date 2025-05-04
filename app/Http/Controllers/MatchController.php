@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Friendship;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -59,6 +60,9 @@ class MatchController extends Controller
             ->with('profile')
             ->get();
 
+            $YourMatches->each(function ($user) {
+                $user->unread_messages = Message::whereNull('read_at')->where('sender_id',$user->id)->count(); // dynamic property
+            });
 
         return view('pages.matches', compact('NotYourMatches', 'YourMatches'));
     }

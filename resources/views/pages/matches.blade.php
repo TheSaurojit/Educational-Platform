@@ -34,21 +34,7 @@
                 <button class="clear-filter-btn" id="clear-filter-btn">Clear Filter</button>
 
                 <div class="interests-container">
-                    @foreach ([ "Number Theory",
-                    "Abstract Algebra",
-                    "Calculus",
-                    "Real Analysis",
-                    "Complex Analysis",
-                    "Topology",
-                    "Differential Geometry",
-                    "Linear Algebra",
-                    "Combinatorics",
-                    "Graph Theory",
-                    "Probability Theory",
-                    "Statistics",
-                    "Applied Mathematics",
-                    "Mathematical Physics",
-                    "Mathematical Logic"] as $interest)
+                    @foreach (['Number Theory', 'Abstract Algebra', 'Calculus', 'Real Analysis', 'Complex Analysis', 'Topology', 'Differential Geometry', 'Linear Algebra', 'Combinatorics', 'Graph Theory', 'Probability Theory', 'Statistics', 'Applied Mathematics', 'Mathematical Physics', 'Mathematical Logic'] as $interest)
                         <div class="interest-pill" data-interest="{{ $interest }}">{{ $interest }}</div>
                     @endforeach
                 </div>
@@ -126,6 +112,8 @@
                         $interests = $user->profile->mathematical_interests;
                         $achievements = $user->profile->achievements;
 
+                        $unread_messages = $user->unread_messages;
+
                     @endphp
 
                     <a href="{{ $url }}">
@@ -146,16 +134,18 @@
                                     @endforeach
                                 </div>
                                 <div class="match-footer">
-                                {{-- <div class="date">Apr 12, 2023</div>
-                                <div class="message-count">
-                                    <span class="message-icon">💬</span> 2 messages
+                                    {{-- <div class="date">Apr 12, 2023</div> --}}
+                                    <b>
+                                        <div class="message-count">
+                                            <span class="message-icon">💬</span> {{ $unread_messages }} New Messages
+                                        </div>
+                                    </b>
+                                    <a href="{{ route('chat', ['user' => $userId]) }}">
+                                        <button class="chat-now-btn">
+                                            <span class="chat-icon">💬</span> Chat Now
+                                        </button>
+                                    </a>
                                 </div>
-                                <a href="{{ route('chat',['user'=>$userId])}}">
-                                    <button class="chat-now-btn">
-                                        <span class="chat-icon">💬</span> Chat Now
-                                    </button>
-                                </a> --}}
-                            </div>
                             </div>
                         </div>
                     </a>

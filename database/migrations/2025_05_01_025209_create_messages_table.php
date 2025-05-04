@@ -11,19 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
-            $table->id();
 
-            $table->uuid('chat_id');
-            $table->uuid('sender_id');
+
+        Schema::create('messages', function (Blueprint $table) {
+            $table->uuid('id')->primary(); // Using UUID as primary key
+            $table->uuid('chat_id')->index();
+            $table->uuid('sender_id')->index();
+            $table->uuid('receiver_id')->index();
 
             $table->text('message');
             $table->timestamp('read_at')->nullable();
-            
-            //foreign
+
+            // Foreign keys
             $table->foreign('chat_id')->references('id')->on('chats')->onDelete('cascade');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
-            
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }

@@ -80,15 +80,14 @@ Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback')
 Route::middleware('isUser')->group(function () {
 
     Route::controller(ChatController::class)->group(function () {
-        // Route::get('/chat/{user}', 'showChat')->name('chat');
+        Route::get('/chat/{user}', 'showChat')->name('chat');
     });
 
     Route::controller(MessageController::class)->group(function () {
 
-        //apis
-        // Route::get('/message/{chat}',  'getNewMsg');     // get messages
-        // Route::post('/message/{chat}',  'storeMsg')->name('storeMsg');     // send message
-        // Route::post('/messages/{message}/read',  'markAsRead');   // mark as read
+        // apis
+        Route::get('/get-message/{chatId}',  'getNewMsg')->name('getNewMsg');     // get messages
+        Route::post('/message/{chatId}',  'storeMsg')->name('storeMsg');     // send message
     });
 
 

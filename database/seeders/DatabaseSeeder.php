@@ -31,15 +31,23 @@ class DatabaseSeeder extends Seeder
         ]) ;
 
         User::create([
-            'name' => "Abhraham lin" ,
+            'name' => "Karmaaa lin" ,
             'email' => "karmakarsayan567@gmail.com",
             'password' => Hash::make('123456') ,
             'email_verified_at' => now() 
         ]) ;
 
         User::create([
-            'name' => "John Doe" ,
+            'name' => "Tanmoy " ,
             'email' => "thetanmoy515@gmail.com",
+            'password' => Hash::make('123456') ,
+            'email_verified_at' => now() 
+        ]) ;
+
+        
+        User::create([
+            'name' => "John Doe" ,
+            'email' => "user@gmail.com",
             'password' => Hash::make('123456') ,
             'email_verified_at' => now() 
         ]) ;
