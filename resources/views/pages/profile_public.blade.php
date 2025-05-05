@@ -39,7 +39,7 @@
                         {{-- <p class="bio">Math major at Columbia University with a passion for number theory and abstract algebra. I enjoy solving complex mathematical puzzles and participating in math competitions.</p> --}}
                     </div>
 
-                  
+
                 </div>
 
                 <div class="social-links">
@@ -123,8 +123,20 @@
                         Achievements
                     </h2>
                     <ul class="achievement-list">
+
                         <li class="achievement-item">
-                            {{ $profile->achievements }}
+
+
+                            @php
+                                $text = $profile->achievements;
+                            @endphp
+
+                            @if (filter_var($text, FILTER_VALIDATE_URL))
+                               <a href="{{ $text }}" target="_blank" style="color: blue">{{ $text }}</a>
+                            @else
+                                 {{ $text }}
+                            @endif
+
                         </li>
                         {{-- <li class="achievement-item">First Place, National Mathematics Competition 2019</li>
                     <li class="achievement-item">Published paper on prime number distribution in undergraduate journal</li> --}}
@@ -159,7 +171,7 @@
         <div class="connections-card">
             <h2 class="connections-title">Looking for more connections?</h2>
             <p class="connections-subtitle">Explore potential matches based on your mathematical interests.</p>
-            <a href="{{ route('matches')}} " class="explore-btn">Explore Matches</a>
+            <a href="{{ route('matches') }} " class="explore-btn">Explore Matches</a>
         </div>
     </div>
 @endsection
