@@ -61,7 +61,7 @@ class MatchController extends Controller
             ->get();
 
             $YourMatches->each(function ($user) {
-                $user->unread_messages = Message::whereNull('read_at')->where('sender_id',$user->id)->count(); // dynamic property
+                $user->unread_messages = Message::whereNull('read_at')->where('sender_id',$user->id)->where('receiver_id',Auth::id())->count(); // dynamic property
             });
 
         return view('pages.matches', compact('NotYourMatches', 'YourMatches'));

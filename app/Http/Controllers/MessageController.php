@@ -69,7 +69,7 @@ class MessageController extends Controller
             : $chatRecord->user_one_id;
 
 
-        $messages = Message::whereNull('read_at')->where('sender_id', $receiverId)->select('id','message','read_at','created_at')->oldest()->get();
+        $messages = Message::whereNull('read_at')->where('sender_id', $receiverId)->where('receiver_id', $currentUserId)->select('id','message','read_at','created_at')->oldest()->get();
 
         $messageIds = $messages->pluck('id');
 
