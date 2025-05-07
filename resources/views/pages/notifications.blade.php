@@ -96,8 +96,6 @@
                     <div class="action-buttons">
                         <x-post-button url="{{ route('friend.accept',['senderId' => $userId])}}" label="Accept" class="accept-btn"></x-post-button>
                         <x-post-button url="{{ route('friend.reject',['senderId' => $userId])}}" label="Reject" class="reject-btn"></x-post-button>
-
-
                     </div>
                 </div>
             @endforeach
