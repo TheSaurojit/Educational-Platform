@@ -53,7 +53,7 @@
         <div class="info-item">
             <div class="info-icon">✉</div>
             <h3>Email</h3>
-            <p>support@maths-matchmaker.com</p>
+            <p>support@maths-matchmaker.com<br/>samujjal.barman@mathsmatchmaker.com</p>
         </div>
         
         <div class="info-item">
