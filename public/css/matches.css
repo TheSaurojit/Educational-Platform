@@ -815,7 +815,7 @@ position: relative;
     margin-top: 5px;
 }
 
-.reject-btn {
+.disconnect-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -830,12 +830,12 @@ position: relative;
     transition: all 0.2s ease;
 }
 
-.reject-btn:hover {
+.disconnect-btn:hover {
     background-color: #f1aeb5;
     border-color: #e4808a;
 }
 
-.reject-btn svg {
+.disconnect-btn svg {
     width: 14px;
     height: 14px;
 }
