@@ -44,55 +44,53 @@
 
         <div id="potential-matches-content" style="display: none;">
 
-            @foreach ($YourMatches as $user)
-            @php
-                $url = route('others.profile', ['userId' => $user->id]);
-        
-                $userId = $user->id;
-                $image = $user->profile->profile_image;
-                $name = $user->name;
-                $interests = $user->profile->mathematical_interests;
-                $achievements = $user->profile->achievements;
-        
-                $unread_messages = $user->unread_messages;
-        
-            @endphp
-        
-            <a href="{{ $url }}">
-        
-                <div class="match-card">
-                    <img src="{{ $image }}" class="profile-image" alt="Profile picture">
-                    <div class="profile-info">
-                        <h2 class="profile-name">{{ $name }}</h2>
-                        <p class="profile-description">
-                            {{ $achievements }}
-                        </p>
-                        <p class="interests-title">All Interests:</p>
-                        <div class="interest-tags">
-                            @foreach ($interests as $int)
-                                <span class="interest-tag">{{ $int }}</span>
-                            @endforeach
-                        </div>
-                        <div class="match-footer">
-                            <b>
-                                <div class="message-count">
-                                    <span class="message-icon">💬</span> {{ $unread_messages }} New Messages
-                                </div>
-                            </b>
-                            <div class="action-buttons">
-                                <a href="{{ route('chat', ['user' => $userId]) }}">
-                                    <button class="chat-now-btn">
-                                        <span class="chat-icon">💬</span> Chat Now
-                                    </button>
-                                </a>
-                               
+            @foreach ($NotYourMatches as $user)
+                @php
+                    $url = route('others.profile', ['userId' => $user->id]);
+                    $userId = $user->id;
+                    $image = $user->profile->profile_image;
+                    $name = $user->name;
+                    $interests = $user->profile->mathematical_interests;
+                    $achievements = $user->profile->achievements;
+
+                @endphp
+
+                <a href="{{ $url }}">
+
+                    <div class="mathematician-card">
+                        <img src="{{ $image }}" alt="Sophia Chen" class="mathematician-photo">
+                        <div class="mathematician-info">
+                            <h2 class="mathematician-name">{{ $name }}</h2>
+                            <p class="mathematician-bio">
+                                {{ $achievements }}
+                            </p>
+
+                            <p class="interests-label">Interests:</p>
+                            <div class="interests-tags">
+                                @foreach ($interests as $int)
+                                    <div class="interest-tag">{{ $int }}</div>
+                                @endforeach
+
                             </div>
+
+                            <x-post-button url="{{ route('friend.send', ['receiverId' => $userId]) }}" label="Send Request"
+                                class="connect-btn">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                            </x-post-button>
+
                         </div>
                     </div>
-                </div>
-        
-            </a>
-        @endforeach
+
+                </a>
+            @endforeach
 
 
             <div class="match-card-empty" id="potential-empty-state" style="display: none;">
@@ -105,59 +103,61 @@
             <div id="your-matches-content">
 
                 @foreach ($YourMatches as $user)
-                @php
-                    $url = route('others.profile', ['userId' => $user->id]);
-            
-                    $userId = $user->id;
-                    $image = $user->profile->profile_image;
-                    $name = $user->name;
-                    $interests = $user->profile->mathematical_interests;
-                    $achievements = $user->profile->achievements;
-            
-                    $unread_messages = $user->unread_messages;
-            
-                @endphp
-            
-                <a href="{{ $url }}">
-            
-                    <div class="match-card">
-                        <img src="{{ $image }}" class="profile-image" alt="Profile picture">
-                        <div class="profile-info">
-                            <h2 class="profile-name">{{ $name }}</h2>
-                            <p class="profile-description">
-                                {{ $achievements }}
-                            </p>
-                            <p class="interests-title">All Interests:</p>
-                            <div class="interest-tags">
-                                @foreach ($interests as $int)
-                                    <span class="interest-tag">{{ $int }}</span>
-                                @endforeach
-                            </div>
-                            <div class="match-footer">
-                                <b>
-                                    <div class="message-count">
-                                        <span class="message-icon">💬</span> {{ $unread_messages }} New Messages
+                    @php
+                        $url = route('others.profile', ['userId' => $user->id]);
+
+                        $userId = $user->id;
+                        $image = $user->profile->profile_image;
+                        $name = $user->name;
+                        $interests = $user->profile->mathematical_interests;
+                        $achievements = $user->profile->achievements;
+
+                        $unread_messages = $user->unread_messages;
+
+                    @endphp
+
+                    <a href="{{ $url }}">
+
+                        <div class="match-card">
+                            <img src="{{ $image }}" class="profile-image" alt="Profile picture">
+                            <div class="profile-info">
+                                <h2 class="profile-name">{{ $name }}</h2>
+                                {{-- <p class="matched-on">Matched on <a href="#" class="match-tag">Number Theory</a></p> --}}
+                                <p class="profile-description">
+                                    {{ $achievements }}
+
+                                </p>
+                                <p class="interests-title">All Interests:</p>
+                                <div class="interest-tags">
+                                    @foreach ($interests as $int)
+                                        <span class="interest-tag">{{ $int }}</span>
+                                    @endforeach
+                                </div>
+                                <div class="match-footer">
+                                    {{-- <div class="date">Apr 12, 2023</div> --}}
+                                    <b>
+                                        <div class="message-count">
+                                            <span class="message-icon">💬</span> {{ $unread_messages }} New Messages
+                                        </div>
+                                    </b>
+                                    <div class="action-buttons">
+                                        <a href="{{ route('chat', ['user' => $userId]) }}">
+                                            <button class="chat-now-btn">
+                                                <span class="chat-icon">💬</span> Chat Now
+                                            </button>
+                                        </a>
+                                        <x-post-button url="{{ route('friend.reject',['senderId' => $userId])}}" label="Disconnect" class="reject-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M18 6L6 18"></path>
+                                                <path d="M6 6L18 18"></path>
+                                            </svg>                                      
+                                        </x-post-button>
                                     </div>
-                                </b>
-                                <div class="action-buttons">
-                                    <a href="{{ route('chat', ['user' => $userId]) }}">
-                                        <button class="chat-now-btn">
-                                            <span class="chat-icon">💬</span> Chat Now
-                                        </button>
-                                    </a>
-                                    <x-post-button url="{{ route('friend.reject',['senderId' => $userId])}}" label="Disconnect" class="disconnect-btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M18 6L6 18"></path>
-                                            <path d="M6 6L18 18"></path>
-                                        </svg>
-                                    </x-post-button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-            
-                </a>
-            @endforeach
+                    </a>
+                @endforeach
 
 
             </div>
