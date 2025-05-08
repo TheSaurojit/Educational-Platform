@@ -241,22 +241,34 @@
 
             // Math interests
             const interests = [
-                "Number Theory",
-    "Abstract Algebra",
+    "Arithmetic",
+    "Pre-Algebra",
+    "Euclidean Geometry",
+    "Algebra",
+    "Trigonometry",
+    "Linear Algebra",
+    "Pre-Calculus",
+    "Number Theory",
     "Calculus",
+    "Advanced Algebra",
+    "Discrete Mathematics",
+    "Differential Equations",
+    "Mathematical Proofs and Logic",
+    "Abstract Algebra",
     "Real Analysis",
     "Complex Analysis",
     "Topology",
+    "Mathematical Statistics",
     "Differential Geometry",
-    "Linear Algebra",
+    "Partial Differential Equations",
+    "Numerical Analysis",
     "Combinatorics",
+    "Functional Analysis",
+    "Multivariable Calculus",
     "Graph Theory",
-    "Probability Theory",
-    "Statistics",
-    "Applied Mathematics",
-    "Mathematical Physics",
-    "Mathematical Logic"
+    "Probability Theory"
 ];
+
 
 
 

@@ -142,21 +142,33 @@
 
         <div class="field-tags-container">
             <div class="field-tags">
+                <span class="field-tag">Arithmetic</span>
+                <span class="field-tag">Pre-Algebra</span>
+                <span class="field-tag">Euclidean Geometry</span>
+                <span class="field-tag">Algebra</span>
+                <span class="field-tag">Trigonometry</span>
+                <span class="field-tag">Linear Algebra</span>
+                <span class="field-tag">Pre-Calculus</span>
                 <span class="field-tag">Number Theory</span>
-<span class="field-tag">Abstract Algebra</span>
-<span class="field-tag">Calculus</span>
-<span class="field-tag">Real Analysis</span>
-<span class="field-tag">Complex Analysis</span>
-<span class="field-tag">Topology</span>
-<span class="field-tag">Differential Geometry</span>
-<span class="field-tag">Linear Algebra</span>
-<span class="field-tag">Combinatorics</span>
-<span class="field-tag">Graph Theory</span>
-<span class="field-tag">Probability Theory</span>
-<span class="field-tag">Statistics</span>
-<span class="field-tag">Applied Mathematics</span>
-<span class="field-tag">Mathematical Physics</span>
-<span class="field-tag">Mathematical Logic</span>
+                <span class="field-tag">Calculus</span>
+                <span class="field-tag">Advanced Algebra</span>
+                <span class="field-tag">Discrete Mathematics</span>
+                <span class="field-tag">Differential Equations</span>
+                <span class="field-tag">Mathematical Proofs and Logic</span>
+                <span class="field-tag">Abstract Algebra</span>
+                <span class="field-tag">Real Analysis</span>
+                <span class="field-tag">Complex Analysis</span>
+                <span class="field-tag">Topology</span>
+                <span class="field-tag">Mathematical Statistics</span>
+                <span class="field-tag">Differential Geometry</span>
+                <span class="field-tag">Partial Differential Equations</span>
+                <span class="field-tag">Numerical Analysis</span>
+                <span class="field-tag">Combinatorics</span>
+                <span class="field-tag">Functional Analysis</span>
+                <span class="field-tag">Multivariable Calculus</span>
+                <span class="field-tag">Graph Theory</span>
+                <span class="field-tag">Probability Theory</span>
+                
 
             </div>
 
@@ -185,12 +197,6 @@
                     understand your expertise and research interests.</div>
             </div>
 
-            <div class="faq-item">
-                <div class="faq-question">How do I join discussion groups?</div>
-                <div class="faq-answer">Visit the Discover section to browse available discussion groups organized by
-                    mathematical fields. You can join existing conversations or create your own topic to engage with
-                    like-minded mathematicians around specific problems or areas of study.</div>
-            </div>
 
             <div class="faq-item">
                 <div class="faq-question">Is Maths-matchmaker free to use?</div>
