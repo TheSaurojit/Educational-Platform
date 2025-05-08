@@ -60,9 +60,9 @@ class MatchController extends Controller
             ->with('profile')
             ->get();
 
-            $YourMatches->each(function ($user) {
-                $user->unread_messages = Message::whereNull('read_at')->where('sender_id',$user->id)->where('receiver_id',Auth::id())->count(); // dynamic property
-            });
+        $YourMatches->each(function ($user) {
+            $user->unread_messages = Message::whereNull('read_at')->where('sender_id', $user->id)->where('receiver_id', Auth::id())->count(); // dynamic property
+        });
 
         return view('pages.matches', compact('NotYourMatches', 'YourMatches'));
     }
@@ -155,4 +155,29 @@ class MatchController extends Controller
 
         return back()->with(['success' => 'Friend request rejected!']);
     }
+
+    public function disconnect($userId)
+    {
+        $currentUserId = Auth::id();
+
+        $friendship = Friendship::where(function ($query) use ($currentUserId, $userId) {
+            $query->where('sender_id', $currentUserId)
+                ->where('receiver_id', $userId);
+            })
+            ->orWhere(function ($query) use ($currentUserId, $userId) {
+                $query->where('sender_id', $userId)
+                    ->where('receiver_id', $currentUserId);
+            })
+            ->where('status', 'accepted') // Ensure the friendship is accepted
+            ->first();
+
+        if (!$friendship) {
+            return back();
+        }
+        $friendship->delete();
+
+        return back()->with(['success' => 'Friend disconnected!']);
+    }
+
+
 }

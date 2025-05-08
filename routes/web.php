@@ -97,6 +97,9 @@ Route::middleware('isUser')->group(function () {
         Route::post('/send-request/{receiverId}', 'sendRequest')->name('send');
         Route::post('/accept-request/{senderId}', 'acceptRequest')->name('accept');
         Route::post('/reject-request/{senderId}', 'rejectRequest')->name('reject');
+
+        Route::post('/disconnect/{userId}', 'disconnect')->name('disconnect');
+
     });
 
     Route::get('/notifications',  [MatchController::class, 'notifications'])->name('notifications');
